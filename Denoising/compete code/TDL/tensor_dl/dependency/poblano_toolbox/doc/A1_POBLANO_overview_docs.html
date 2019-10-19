@@ -1,0 +1,407 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Toolbox Overview</title>
+      <meta name="generator" content="MATLAB 7.9">
+      <meta name="date" content="2010-03-17">
+      <meta name="m-file" content="A1_POBLANO_overview_docs"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: left;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <table width="100%" bgcolor="#CCFFDD">
+         <tr>
+            <td><b>Poblano Toolbox</b></td>
+         </tr>
+      </table><br><div class="content">
+         <h1>Toolbox Overview</h1>
+         <introduction>
+            <p>Poblano is a toolbox of large-scale algorithms for nonlinear optimization. The algorithms in Poblano require only first-order
+               derivative information (e.g., gradients for scalar-valued objective functions).
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">Introduction</a></li>
+               <li><a href="#8">Optimization Methods</a></li>
+               <li><a href="#10">Globalization Strategies</a></li>
+               <li><a href="#12">Optimization Input Parameters</a></li>
+               <li><a href="#14">Optimization Output Parameters</a></li>
+               <li><a href="#16">Checking Gradient Calculations</a></li>
+               <li><a href="#18">Examples</a></li>
+               <li><a href="#20">Calling a Poblano Optimizer</a></li>
+               <li><a href="#25">Acknowledgments</a></li>
+               <li><a href="#27">References</a></li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Introduction<a name="2"></a></h2>
+         <p>Poblano optimizers find local minimizers of scalar-valued objective functions taking vector inputs. Specifically, the problems
+            solved by Poblano optimizers are of the following form:
+         </p>
+         <p><img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq57797.png"> </p>
+         <p>The gradient of the objective function, <img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq92049.png"> , is required for all Poblano optimizers. The optimizers converge to a stationary point, <img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq52638.png"> , where
+         </p>
+         <p><img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq56797.png"> </p>
+         <p>A line search satisfying the strong Wolfe conditions is used to guarantee global convergence of the Poblano optimizers.</p>
+         <p><hr></p>
+         <h2>Optimization Methods<a name="8"></a></h2>
+         <p>The following optimization methods are available in Poblano.</p>
+         <p><b>Nonlinear conjugate gradient method</b> (<tt>ncg</tt>) [4]
+         </p>
+         <div>
+            <ul>
+               <li>Uses Fletcher-Reeves, Polak-Ribiere, and Hestenes-Stiefel conjugate direction updates</li>
+               <li>Restart strategies based on number of iterations or orthogonality of gradients across iterations</li>
+               <li>Steepest descent method is a special case</li>
+            </ul>
+         </div>
+         <p><b>Limited-memory BFGS method</b> (<tt>lbfgs</tt>) [4]
+         </p>
+         <div>
+            <ul>
+               <li>Uses a two-loop recursion for approximate Hessian-gradient products</li>
+            </ul>
+         </div>
+         <p><b>Truncated Newton method</b> (<tt>tn</tt>) [1]
+         </p>
+         <div>
+            <ul>
+               <li>Uses finite differencing for approximate Hessian-vector products</li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Globalization Strategies<a name="10"></a></h2>
+         <p><b>Line search methods</b></p>
+         <div>
+            <ul>
+               <li>More-Thuente cubic interpolation line search (<tt>cvsrch</tt>) [3]
+               </li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Optimization Input Parameters<a name="12"></a></h2>
+         <p>Input parameters are passed to the different optimization methods using Matlab <tt>inputParser</tt> objects. Some parameters are shared across all methods and others are specific to a particular method. Below are descriptions
+            of the shared input parameters and examples of how to set and use these parameters in the optimization methods. The Poblano
+            function <tt>poblano_params</tt> is used by the optimization methods to set the input parameters. See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details.
+         </p>
+         <p><hr></p>
+         <h2>Optimization Output Parameters<a name="14"></a></h2>
+         <p>Each of the optimization methods in Poblano outputs a single structure containing fields for the approximate solution, function
+            and gradient values at the solution, and various information about the optimization run (e.g., number of function evaluations,
+            etc.). The Poblano function <tt>poblano_out</tt> is used by the optimization methods to set the output parameters. See the <a href="A3_poblano_out_docs.html">Optimization Output Parameters</a> documentation for more details.
+         </p>
+         <p><hr></p>
+         <h2>Checking Gradient Calculations<a name="16"></a></h2>
+         <p>Analytic gradients can be checked using finite difference approximations. The Poblano function <tt>gradientcheck</tt> computes the gradient approximations and compares the results to the analytic gradient using a user-supplied objective function/gradient
+            M-file. The user can choose one of several difference formulas as well as the difference step used in the computations. See
+            the <a href="E_gradientcheck_docs.html">Checking Gradient Calculations</a> documentation for more details.
+         </p>
+         <p><hr></p>
+         <h2>Examples<a name="18"></a></h2>
+         <p>Poblano provides two example function/gradient M-files:</p>
+         <div>
+            <ul>
+               <li><tt>example1</tt>: simple multivariate function
+               </li>
+               <li><tt>example2</tt>: more complicated function of a matrix variable
+               </li>
+            </ul>
+         </div>
+         <p>See the <a href="A4_poblano_examples_docs.html">Poblano Examples</a> documentation for more details.
+         </p>
+         <p><hr></p>
+         <h2>Calling a Poblano Optimizer<a name="20"></a></h2>
+         <p>All Poblano methods are called using the name of the method along with two required arguments and one or more optional arguments.
+            The required arguments are 1) a handle to the function being minimized, and 2) the initial guess of the solution (as a scalar
+            or column vector). For example, the following is a call to the <tt>ncg</tt> method to minimize the <tt>example1</tt> function distributed with Poblano starting with an initial guess of <img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq45126.png">  and using the default <tt>ncg</tt> parameters.
+         </p><pre class="codeinput">ncg(@example1, pi/4);
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       0.70710678       0.70710678
+     1         6      -0.99999998       0.00017407
+     2         7      -1.00000000       0.00000000
+</pre><p>Parameterize functions can be optimized using Poblano as well. For such functions, the function handle can be used to specify
+            the function parameters. For example, Poblano's <tt>example1</tt> function takes an optional scalar parameter as follows.
+         </p><pre class="codeinput">ncg(@(x) example1(x,3), pi/4);
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       0.70710678       2.12132034
+     1        14      -0.99998885       0.01416497
+     2        16      -1.00000000       0.00000147
+</pre><p>Functions taking vectors as inputs can be optimized using Poblano as well. For functions which can take input vectors of arbitrary
+            sizes (e.g., Matlab functions such as <tt>sin</tt>, <tt>fft</tt>, etc.), the size of the initial guess (as a scalar or column vector) determines the size of the problem to be solved. For
+            example, Poblano's \texttt{example1} function can take as input a vector (in this case a vector in <img vspace="5" hspace="5" src="A1_POBLANO_overview_docs_eq93418.png"> ) as follows.
+         </p><pre class="codeinput">ncg(@(x) example1(x,3), [pi/5 pi/4 pi/3]');
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       1.65816330       1.26312767
+     1         5      -0.94404964       0.49911677
+     2         9      -1.64717576       1.35314598
+     3        14      -1.82513979       1.19534779
+     4        19      -2.96660154       0.25769184
+     5        22      -2.99851295       0.05452749
+     6        24      -2.99999996       0.00028818
+     7        26      -3.00000000       0.00000000
+</pre><p>The optional arguments are input parameters specifying how the optimization method is to be run.  See the <a href="A2_poblano_params_docs.html">Input Parameters</a> documentation for details about the input parameters.)
+         </p>
+         <p><hr></p>
+         <h2>Acknowledgments<a name="25"></a></h2>
+         <div>
+            <ul>
+               <li>Dianne O'Leary of the University of Maryland, College Park, provided the Matlab translation of the MINPACK implementation
+                  of the More-Thuente line search.
+               </li>
+               <li>This product includes software developed by the University of Chicago, as Operator of Argonne National Laboratory.</li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>References<a name="27"></a></h2>
+         <p>[1] Dembo, R.S. and and Steihaug, T. (1983). Truncated-Newton algorithms for large-scale unconstrained minimization. <i>Mathematical Programming</i>, 26, 190-212.
+         </p>
+         <p>[2] Golub, G. H. and Loan, C. F. V. (1996). <i>Matrix Computations</i>. Johns Hopkins University Press.
+         </p>
+         <p>[3] More, J. J. and Thuente, D. J. (1994). Line search algorithms with guaranteed sufficient decrease. <i>ACM Trans. Math. Softw.</i>, 20, 286-307.
+         </p>
+         <p>[4] Nocedal, J. and Wright S. J. (1999). <i>Numerical Optimization</i>. Springer.
+         </p><br><table width="100%" bgcolor="#CCFFDD">
+            <tr>
+               <td align="left"><b>Poblano Toolbox</b></td>
+            </tr>
+         </table>
+         <p class="footer">
+            &copy;2009-2010, Sandia Corporation. Documentation created with MATLAB&reg; 7.9<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Toolbox Overview
+% Poblano is a toolbox of large-scale algorithms for nonlinear
+% optimization. The algorithms in Poblano require only first-order
+% derivative information (e.g., gradients for scalar-valued objective
+% functions).
+%%
+%
+% <html><hr></html>
+%% Introduction
+% Poblano optimizers find local minimizers of scalar-valued objective
+% functions taking vector inputs. Specifically, the problems solved by
+% Poblano optimizers are of the following form:
+%%
+% 
+% $$\min_{x}f(x), \quad \mbox{where} \quad f:R^n \rightarrow R$$
+%%
+% 
+% The gradient of the objective function, $\nabla f(x)$, is required
+% for all Poblano optimizers. The optimizers converge to a stationary point, 
+% $x^*$, where
+%%
+%
+% $$\nabla f(x^*) \approx 0$$
+%%
+% A line search satisfying the strong Wolfe conditions is used to 
+% guarantee global convergence of the Poblano optimizers.
+%%
+%
+% <html><hr></html>
+%% Optimization Methods
+% The following optimization methods are available in Poblano.
+% 
+% *Nonlinear conjugate gradient method* (|ncg|) [4]
+%
+% * Uses Fletcher-Reeves, Polak-Ribiere, and Hestenes-Stiefel conjugate direction updates 
+% * Restart strategies based on number of iterations or orthogonality of gradients across iterations 
+% * Steepest descent method is a special case 
+%
+% *Limited-memory BFGS method* (|lbfgs|) [4]
+%
+% * Uses a two-loop recursion for approximate Hessian-gradient products
+%
+% *Truncated Newton method* (|tn|) [1]
+%
+% * Uses finite differencing for approximate Hessian-vector products
+%
+%%
+%
+% <html><hr></html>
+%% Globalization Strategies
+%
+% *Line search methods*
+%
+% * More-Thuente cubic interpolation line search (|cvsrch|) [3]
+%%
+%
+% <html><hr></html>
+%% Optimization Input Parameters
+%
+% Input parameters are passed to the different optimization methods using
+% Matlab |inputParser| objects. Some parameters are shared across all
+% methods and others are specific to a particular method. Below are
+% descriptions of the shared input parameters and examples of how to set
+% and use these parameters in the optimization methods. The Poblano
+% function |poblano_params| is used by the optimization methods to set the
+% input parameters. See the <A2_poblano_params_docs.html Optimization Input
+% Parameters> documentation for more details.
+%%
+%
+% <html><hr></html>
+%% Optimization Output Parameters
+%
+% Each of the optimization methods in Poblano outputs a single structure
+% containing fields for the approximate solution, function and gradient
+% values at the solution, and various information about the optimization
+% run (e.g., number of function evaluations, etc.). The Poblano function
+% |poblano_out| is used by the optimization methods to set the output
+% parameters. See the <A3_poblano_out_docs.html Optimization Output
+% Parameters> documentation for more details.
+%%
+%
+% <html><hr></html>
+
+%% Checking Gradient Calculations
+%
+% Analytic gradients can be checked using finite difference approximations.
+% The Poblano function |gradientcheck| computes the gradient approximations
+% and compares the results to the analytic gradient using a user-supplied
+% objective function/gradient M-file. The user can choose one of several
+% difference formulas as well as the difference step used in the
+% computations. See the <E_gradientcheck_docs.html Checking Gradient
+% Calculations> documentation for more details.
+%%
+%
+% <html><hr></html>
+%% Examples
+%
+% Poblano provides two example function/gradient M-files:
+% 
+% * |example1|: simple multivariate function
+% * |example2|: more complicated function of a matrix variable
+%
+% See the <A4_poblano_examples_docs.html Poblano Examples> documentation
+% for more details.
+%%
+%
+% <html><hr></html>
+%% Calling a Poblano Optimizer
+% All Poblano methods are called using the name of the method along with
+% two required arguments and one or more optional arguments. The required
+% arguments are 1) a handle to the function being minimized, and 2) the
+% initial guess of the solution (as a scalar or column vector). For
+% example, the following is a call to the |ncg| method to minimize the
+% |example1| function distributed with Poblano starting with an initial
+% guess of $x = \pi/4$ and using the default |ncg| parameters.
+ncg(@example1, pi/4);
+%%
+% Parameterize functions can be optimized using Poblano as well. For such
+% functions, the function handle can be used to specify the function
+% parameters. For example, Poblano's |example1| function takes an optional
+% scalar parameter as follows.
+ncg(@(x) example1(x,3), pi/4);
+%%
+% Functions taking vectors as inputs can be optimized using Poblano as
+% well. For functions which can take input vectors of arbitrary sizes
+% (e.g., Matlab functions such as |sin|, |fft|, etc.), the
+% size of the initial guess (as a scalar or column vector) determines the
+% size of the problem to be solved. For example, Poblano's
+% \texttt{example1} function can take as input a vector (in this case a
+% vector in $R^3$) as follows.
+ncg(@(x) example1(x,3), [pi/5 pi/4 pi/3]');
+%% 
+% The optional arguments are input parameters specifying how the
+% optimization method is to be run.  See the <A2_poblano_params_docs.html
+% Input Parameters> documentation for details about the input parameters.)
+%%
+%
+% <html><hr></html>
+%% Acknowledgments
+%
+% * Dianne O'Leary of the University of Maryland, College Park, provided
+% the Matlab translation of the MINPACK implementation of the More-Thuente
+% line search.
+% * This product includes software developed by the University of Chicago,
+% as Operator of Argonne National Laboratory.
+%
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Dembo, R.S. and and Steihaug, T. (1983). Truncated-Newton algorithms 
+% for large-scale unconstrained minimization. _Mathematical Programming_, 
+% 26, 190-212.
+%
+% [2] Golub, G. H. and Loan, C. F. V. (1996). _Matrix Computations_. 
+% Johns Hopkins University Press.
+%
+% [3] More, J. J. and Thuente, D. J. (1994). Line search algorithms with 
+% guaranteed sufficient decrease. _ACM Trans. Math. Softw._, 20, 286-307.
+%
+% [4] Nocedal, J. and Wright S. J. (1999). 
+% _Numerical Optimization_. Springer.
+%
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

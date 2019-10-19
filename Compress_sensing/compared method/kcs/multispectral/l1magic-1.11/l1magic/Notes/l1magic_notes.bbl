@@ -1,0 +1,115 @@
+\begin{thebibliography}{10}
+
+\bibitem{alizadeh03se}
+F.~Alizadeh and D.~Goldfarb.
+\newblock Second-order cone programming.
+\newblock {\em Math. Program., Ser. B}, 95:3--51, 2003.
+
+\bibitem{boyd04co}
+S.~Boyd and L.~Vandenberghe.
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem{candes05qu}
+E.~Cand\`es and J.~Romberg.
+\newblock Quantitative robust uncertainty principles and optimally sparse
+  decompositions.
+\newblock {\em To appear in Foundations of Comput. Math.}, 2005.
+
+\bibitem{candes04ro}
+E.~Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Robust uncertainty principles: {E}xact signal reconstruction from
+  highly incomplete frequency information.
+\newblock {\em Submitted to IEEE Trans.\ Inform.\ Theory}, June 2004.
+\newblock Available on theArXiV preprint server: {\tt math.GM/0409186}.
+
+\bibitem{candes05st}
+E.~Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Stable signal recovery from incomplete and inaccurate measurements.
+\newblock {\em Submitted to Communications on Pure and Applied Mathematics},
+  March 2005.
+
+\bibitem{candes04ne}
+E.~Cand\`es and T.~Tao.
+\newblock Near-optimal signal recovery from random projections and universal
+  encoding strategies.
+\newblock {\em submitted to IEEE Trans.\ Inform.\ Theory}, November 2004.
+\newblock Available on the ArXiV preprint server: {\tt math.CA/0410542}.
+
+\bibitem{candes05da}
+E.~Cand\`es and T.~Tao.
+\newblock The {D}antzig selector: statistical estimation when $p$ is much
+  smaller than $n$.
+\newblock Manuscript, May 2005.
+
+\bibitem{candes05de}
+E.~J. Cand\`es and T.~Tao.
+\newblock Decoding by linear programming.
+\newblock {\em To appear in IEEE Trans. Inform. Theory}, December 2005.
+
+\bibitem{chan99no}
+T.~Chan, G.~Golub, and P.~Mulet.
+\newblock A nonlinear primal-dual method for total variation-based image
+  restoration.
+\newblock {\em SIAM J. Sci. Comput.}, 20:1964--1977, 1999.
+
+\bibitem{chen99at}
+S.~S. Chen, D.~L. Donoho, and M.~A. Saunders.
+\newblock Atomic decomposition by basis pursuit.
+\newblock {\em SIAM J. Sci. Comput.}, 20:33--61, 1999.
+
+\bibitem{goldfarb04se}
+D.~Goldfarb and W.~Yin.
+\newblock Second-order cone programming methods for total variation-based image
+  restoration.
+\newblock Technical report, Columbia University, 2004.
+
+\bibitem{hintermueller05in}
+H.~Hinterm\"uller and G.~Stadler.
+\newblock An infeasible primal-dual algorithm for {TV}-based
+  inf-convolution-type image restoration.
+\newblock {\em To appear in SIAM J. Sci. Comput.}, 2005.
+
+\bibitem{lobo98ap}
+M.~Lobo, L.~Vanderberghe, S.~Boyd, and H.~Lebret.
+\newblock Applications of second-order cone programming.
+\newblock {\em Linear Algebra and its Applications}, 284:193--228, 1998.
+
+\bibitem{nesterov94in}
+Y.~E. Nesterov and A.~S. Nemirovski.
+\newblock {\em Interior Point Polynomial Methods in Convex Programming}.
+\newblock SIAM Publications, Philadelphia, 1994.
+
+\bibitem{nocedal99nu}
+J.~Nocedal and S.~J. Wright.
+\newblock {\em Numerical Optimization}.
+\newblock Springer, New York, 1999.
+
+\bibitem{paige75so}
+C.~C. Paige and M.~Saunders.
+\newblock Solution of sparse indefinite systems of linear equations.
+\newblock {\em SIAM J. Numer. Anal.}, 12(4), September 1975.
+
+\bibitem{renegar01ma}
+J.~Renegar.
+\newblock {\em A mathematical view of interior-point methods in convex
+  optimization}.
+\newblock MPS-SIAM Series on Optimization. SIAM, 2001.
+
+\bibitem{rudin92no}
+L.~I. Rudin, S.~Osher, and E.~Fatemi.
+\newblock Nonlinear total variation noise removal algorithm.
+\newblock {\em Physica D}, 60:259--68, 1992.
+
+\bibitem{shewchuk94in}
+J.~R. Shewchuk.
+\newblock An introduction to the conjugate gradient method without the
+  agonizing pain.
+\newblock Manuscript, August 1994.
+
+\bibitem{wright97pr}
+S.~J. Wright.
+\newblock {\em Primal-Dual Interior-Point Methods}.
+\newblock SIAM Publications, 1997.
+
+\end{thebibliography}

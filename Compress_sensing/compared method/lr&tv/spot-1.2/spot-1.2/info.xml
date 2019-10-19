@@ -1,0 +1,28 @@
+<productinfo
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="optional">
+<?xml-stylesheet type="text/xsl" href="optional"?>
+
+<matlabrelease>R2009a</matlabrelease>
+<name>Spot Operator</name>
+<type>toolbox</type>
+<icon>$toolbox/matlab/icons/HDF_object01.gif</icon>
+<help_location>doc/</help_location>
+
+<list>
+
+<listitem>
+<label>Help</label>
+<callback>doc spot</callback>
+<icon>$toolbox/matlab/icons/book_mat.gif</icon>
+</listitem>
+
+<listitem>
+<label>Spot Web Page</label>
+<callback>web http://www.cs.ubc.ca/labs/scl/spot -browser;</callback>
+<icon>$toolbox/matlab/icons/webicon.gif</icon>
+</listitem>
+
+</list>
+
+</productinfo>

@@ -1,0 +1,270 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  29 JAN 2009 09:28
+entering extended mode
+\write18 enabled.
+ %&-line parsing enabled.
+**l1magic_notes.tex
+(./l1magic_notes.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, arabic, basque, bulgarian, coptic, welsh, czech, slovak, german, ng
+erman, danish, esperanto, spanish, catalan, galician, estonian, farsi, finnish,
+ french, greek, monogreek, ancientgreek, croatian, hungarian, interlingua, ibyc
+us, indonesian, icelandic, italian, latin, mongolian, dutch, norsk, polish, por
+tuguese, pinyin, romanian, russian, slovenian, uppersorbian, serbian, swedish, 
+turkish, ukenglish, ukrainian, loaded.
+(/usr/local/texlive/2007/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/local/texlive/2007/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/local/texlive/2007/texmf-dist/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 149.
+LaTeX Info: Redefining \nocite on input line 214.
+Package: cite 2003/11/04  v 4.01
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/local/texlive/2007/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/tools/array.sty
+Package: array 2005/08/23 v2.4b Tabular extension package (FMi)
+\col@sep=\dimen114
+\extrarowheight=\dimen115
+\NC@list=\toks20
+\extratabsurround=\skip46
+\backup@length=\skip47
+)
+(./l1magic_notes.aux)
+\openout1 = `l1magic_notes.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+
+(/usr/local/texlive/2007/texmf-dist/tex/context/base/supp-pdf.tex
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count100
+\scratchdimen=\dimen116
+\scratchbox=\box28
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen117
+\MPnumerator=\count104
+\everyMPtoPDFconversion=\toks21
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+ (/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 61.
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 61.
+ [1
+
+{/usr/local/texlive/2007/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+ [4] [5]
+[6]
+Overfull \hbox (31.4219pt too wide) in paragraph at lines 376--377
+[]\OT1/cmr/m/n/10 In Ap-pendix, we ex-plic-itly de-rive the equa-tions for the 
+New-ton step for each of $(\OML/cmm/m/it/10 P[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/1
+0 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 TV[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \
+OT1/cmr/m/n/10 (\OML/cmm/m/it/10 TV[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OT1/c
+mr/m/n/10 (\OML/cmm/m/it/10 TV[]\OT1/cmr/m/n/10 )$,
+ []
+
+[7] [8] <Figs/l1eqexample_signal.pdf, id=50, 471.7625pt x 366.36874pt>
+File: Figs/l1eqexample_signal.pdf Graphic file (type pdf)
+
+<use Figs/l1eqexample_signal.pdf>
+<Figs/l1eqexample_minl2.pdf, id=51, 471.7625pt x 370.38374pt>
+File: Figs/l1eqexample_minl2.pdf Graphic file (type pdf)
+
+<use Figs/l1eqexample_minl2.pdf>
+<Figs/l1eqexample_recovered.pdf, id=52, 471.7625pt x 366.36874pt>
+File: Figs/l1eqexample_recovered.pdf Graphic file (type pdf)
+
+<use Figs/l1eqexample_recovered.pdf> [9 <./Figs/l1eqexample_signal.pdf> <./Figs
+/l1eqexample_minl2.pdf> <./Figs/l1eqexample_recovered.pdf>]
+<Figs/phantom_orig.pdf, id=80, 355.3275pt x 354.32375pt>
+File: Figs/phantom_orig.pdf Graphic file (type pdf)
+
+<use Figs/phantom_orig.pdf>
+<Figs/phantom_sampling.pdf, id=81, 355.3275pt x 354.32375pt>
+File: Figs/phantom_sampling.pdf Graphic file (type pdf)
+
+<use Figs/phantom_sampling.pdf>
+<Figs/phantom_backproj.pdf, id=82, 355.3275pt x 354.32375pt>
+File: Figs/phantom_backproj.pdf Graphic file (type pdf)
+
+<use Figs/phantom_backproj.pdf>
+<Figs/phantom_tv.pdf, id=83, 355.3275pt x 354.32375pt>
+File: Figs/phantom_tv.pdf Graphic file (type pdf)
+
+<use Figs/phantom_tv.pdf>
+Overfull \hbox (5.01498pt too wide) in paragraph at lines 545--573
+[][] 
+ []
+
+[10 <./Figs/phantom_orig.pdf> <./Figs/phantom_sampling.pdf> <./Figs/phantom_bac
+kproj.pdf> <./Figs/phantom_tv.pdf>] [11] [12] [13] [14] [15] [16] [17]
+(./l1magic_notes.bbl [18]) [19] (./l1magic_notes.aux) ) 
+Here is how much of TeX's memory you used:
+ 2035 strings out of 94073
+ 24843 string characters out of 1162984
+ 79369 words of memory out of 1500000
+ 5290 multiletter control sequences out of 10000+50000
+ 19265 words of font info for 74 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 27i,12n,24p,829b,271s stack positions out of 5000i,500n,6000p,200000b,5000s
+</usr/local/texlive/2007
+/texmf-dist/fonts/type1/bluesky/cm/cmbx10.pfb></usr/local/texlive/2007/texmf-di
+st/fonts/type1/bluesky/cm/cmbx12.pfb></usr/local/texlive/2007/texmf-dist/fonts/
+type1/bluesky/cm/cmcsc10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bl
+uesky/cm/cmex10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/
+cmmi10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmmi12.pf
+b></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmmi5.pfb></usr/lo
+cal/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmmi7.pfb></usr/local/texliv
+e/2007/texmf-dist/fonts/type1/bluesky/cm/cmmi8.pfb></usr/local/texlive/2007/tex
+mf-dist/fonts/type1/bluesky/cm/cmmi9.pfb></usr/local/texlive/2007/texmf-dist/fo
+nts/type1/bluesky/cm/cmr10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/
+bluesky/cm/cmr12.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm
+/cmr17.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr5.pfb>
+</usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr6.pfb></usr/local
+/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr7.pfb></usr/local/texlive/20
+07/texmf-dist/fonts/type1/bluesky/cm/cmr8.pfb></usr/local/texlive/2007/texmf-di
+st/fonts/type1/bluesky/cm/cmr9.pfb></usr/local/texlive/2007/texmf-dist/fonts/ty
+pe1/bluesky/cm/cmsl9.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesk
+y/cm/cmsltt10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cm
+sy10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmsy7.pfb><
+/usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmsy8.pfb></usr/local
+/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmti10.pfb></usr/local/texlive/
+2007/texmf-dist/fonts/type1/bluesky/cm/cmti8.pfb></usr/local/texlive/2007/texmf
+-dist/fonts/type1/bluesky/cm/cmtt10.pfb></usr/local/texlive/2007/texmf-dist/fon
+ts/type1/bluesky/cm/cmtt8.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/b
+luesky/ams/msbm10.pfb>
+Output written on l1magic_notes.pdf (19 pages, 278394 bytes).
+PDF statistics:
+ 228 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+

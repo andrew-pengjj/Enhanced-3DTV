@@ -1,0 +1,458 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Nonlinear Conjugate Gradient Optimization</title>
+      <meta name="generator" content="MATLAB 7.9">
+      <meta name="date" content="2010-03-17">
+      <meta name="m-file" content="B_ncg_docs"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: left;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <table width="100%" bgcolor="#CCFFDD">
+         <tr>
+            <td><b>Poblano Toolbox</b></td>
+         </tr>
+      </table><br><div class="content">
+         <h1>Nonlinear Conjugate Gradient Optimization</h1>
+         <introduction>
+            <p>Nonlinear conjugate gradient (NCG) methods [3] are used to solve unconstrained nonlinear optimization problems. They are extensions
+               of the conjugate gradient iterative method for solving linear systems adapted to solve unconstrained nonlinear optimization
+               problems.
+            </p>
+            <p>The Poblano function for the nonlinear conjugate gradient methods is called <tt>ncg</tt>.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">Method Description</a></li>
+               <li><a href="#9">Method Specific Input Parameters</a></li>
+               <li><a href="#11">Default Input Parameters</a></li>
+               <li><a href="#14">Examples</a></li>
+               <li><a href="#20">References</a></li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Method Description<a name="2"></a></h2>
+         <p>The general steps of NCG methods are given below in high-level pseudo-code:</p>
+         <p><img vspace="5" hspace="5" src="B_ncg_docs_eq47697.png"> </p>
+         <p><b>Conjugate direction updates</b></p>
+         <p>The computation of <img vspace="5" hspace="5" src="B_ncg_docs_eq43170.png">  in Step 7 above leads to different NCG methods. The update methods for <img vspace="5" hspace="5" src="B_ncg_docs_eq43170.png">  available in Poblano are listed below. Note that the special case of <img vspace="5" hspace="5" src="B_ncg_docs_eq21114.png">  leads to the steepest descent method [3], which is available by specifying this update using the input parameter described
+            in the <a href="B_ncg_docs.html#9">Method Specific Input Parameters</a> section below.
+         </p>
+         <p><i>Fletcher-Reeves</i> [1]:
+         </p>
+         <p><img vspace="5" hspace="5" src="B_ncg_docs_eq48204.png"> </p>
+         <p><i>Polak-Ribiere</i> [4]:
+         </p>
+         <p><img vspace="5" hspace="5" src="B_ncg_docs_eq38027.png"> </p>
+         <p><i>Hestenes-Stiefel</i> [2]:
+         </p>
+         <p><img vspace="5" hspace="5" src="B_ncg_docs_eq64465.png"> </p>
+         <p><b>Negative update coefficients</b></p>
+         <p>In cases where the update coefficient <img vspace="5" hspace="5" src="B_ncg_docs_eq50028.png"> , it is set to <img vspace="5" hspace="5" src="B_ncg_docs_eq12896.png">  to avoid directions that are not descent directions [3].
+         </p>
+         <p><b>Restart procedures</b></p>
+         <p>The NCG iterations are restarted every <i>n</i> iterations, where <i>n</i> is specified by user by setting the <tt>RestartIters</tt> parameter.
+         </p>
+         <p>Another restart modification available in <tt>ncg</tt> that was suggested by Nocedal and Wright [3] is taking a step in the direction of steepest descent when two consecutive gradients
+            are far from orthogonal. Specifically, a steepest descent step is taking when
+         </p>
+         <p><img vspace="5" hspace="5" src="B_ncg_docs_eq26687.png"> </p>
+         <p>where <img vspace="5" hspace="5" src="B_ncg_docs_eq69196.png">  is specified by the user by setting the <tt>RestartNWTol</tt> parameter. This modification is off by default, but can be used by setting the <tt>RestartNW</tt> parameter to "true".
+         </p>
+         <p><hr></p>
+         <h2>Method Specific Input Parameters<a name="9"></a></h2>
+         <p>The input parameters specific to the <tt>ncg</tt> method are presented below. See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.
+         </p><pre>Update        Conjugate direction update {'PR'}
+  'FR'        Fletcher-Reeves
+  'PR'        Polak-Ribiere
+  'HS'        Hestenes-Stiefel
+  'SD'        Steepest Decsent</pre><pre>RestartIters  Number of iterations to run before conjugate direction restart {20}</pre><pre>RestartNW     Flag to use restart heuristic of Nocedal and Wright {false}</pre><pre>RestartNWTol  Tolerance for Nocedal and Wright restart heuristic {0.1}</pre><p><hr></p>
+         <h2>Default Input Parameters<a name="11"></a></h2>
+         <p>The default input parameters are returned with the following call to <tt>ncg</tt>:
+         </p><pre class="codeinput">params = ncg(<span class="string">'defaults'</span>)
+</pre><pre class="codeoutput">
+params = 
+
+                   Display: 'iter'
+           LineSearch_ftol: 0.0001
+           LineSearch_gtol: 0.01
+    LineSearch_initialstep: 1
+         LineSearch_maxfev: 20
+         LineSearch_method: 'more-thuente'
+         LineSearch_stpmax: 1e+15
+         LineSearch_stpmin: 1e-15
+           LineSearch_xtol: 1e-15
+              MaxFuncEvals: 100
+                  MaxIters: 100
+                RelFuncTol: 1e-06
+              RestartIters: 20
+                 RestartNW: 0
+              RestartNWTol: 0.1
+                   StopTol: 1e-05
+                 TraceFunc: 0
+            TraceFuncEvals: 0
+                 TraceGrad: 0
+             TraceGradNorm: 0
+              TraceRelFunc: 0
+                    TraceX: 0
+                    Update: 'PR'
+
+</pre><p>See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.
+         </p>
+         <p><hr></p>
+         <h2>Examples<a name="14"></a></h2>
+         <p><b>Example 1</b> (from <a href="A4_poblano_examples_docs.html#4">Poblano Examples</a>)
+         </p>
+         <p>In this example, we have <img vspace="5" hspace="5" src="B_ncg_docs_eq94234.png">  and <img vspace="5" hspace="5" src="B_ncg_docs_eq37777.png"> , and use a random starting point.
+         </p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+x0 = randn(10,1)
+out = ncg(@(x) example1(x,3), x0)
+</pre><pre class="codeoutput">
+x0 =
+
+     -0.43256
+      -1.6656
+      0.12533
+      0.28768
+      -1.1465
+       1.1909
+       1.1892
+    -0.037633
+      0.32729
+      0.17464
+
+ Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       1.80545257       0.73811114
+     1         5      -4.10636797       0.54564169
+     2         8      -5.76811976       0.52039618
+     3        12      -7.62995880       0.25443887
+     4        15      -8.01672533       0.06329092
+     5        20      -9.51983614       0.28571759
+     6        25      -9.54169917       0.27820083
+     7        28      -9.99984082       0.00535271
+     8        30     -10.00000000       0.00000221
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [10x1 double]
+            F: -10
+            G: [10x1 double]
+    FuncEvals: 30
+        Iters: 8
+
+</pre><p><b>Example 2</b> (from <a href="A4_poblano_examples_docs.html#11">Poblano Examples</a>)
+         </p>
+         <p>In this example, we compute a rank-4 approximation to a <img vspace="5" hspace="5" src="B_ncg_docs_eq12912.png">  Pascal matrix (generated using the Matlab function <tt>pascal(4)</tt>). The starting point is random vector. Note that in the interest of space, Poblano is set to display only the final iteration
+            is this example.
+         </p><pre class="codeinput">m = 4; n = 4; k = 4;
+Data.rank = k;
+Data.A = pascal(m);
+randn(<span class="string">'state'</span>,0);
+x0 = randn((m+n)*k,1);
+out = ncg(@(x) example2(x,Data), x0, <span class="string">'Display'</span>, <span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    39       101       0.00005424       0.00136338
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 2
+            X: [32x1 double]
+            F: 5.4244e-05
+            G: [32x1 double]
+    FuncEvals: 101
+        Iters: 39
+
+</pre><p>The fact that <tt>out.ExitFlag</tt> &gt; 0 indicates that the method did not converge to the specified tolerance (i.e., using the default <tt>StopTol</tt> input parameter value of <tt>1e-5</tt>). This exit flag indicates that the maximum number of function evaluations was exceeded. (See the <a href="A3_poblano_out_docs.html">Optimization Output Parameters</a> documentation for more details.) Increasing the number of maximum numbers of function evaluations and iterations allowed,
+            the optimizer converges to a solution within the specified tolerance.
+         </p><pre class="codeinput">out = ncg(@(x) example2(x,Data), x0, <span class="string">'MaxIters'</span>,1000, <span class="keyword">...</span>
+    <span class="string">'MaxFuncEvals'</span>,10000,<span class="string">'Display'</span>,<span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    76       175       0.00000002       0.00000683
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [32x1 double]
+            F: 1.6469e-08
+            G: [32x1 double]
+    FuncEvals: 175
+        Iters: 76
+
+</pre><p>Verifying the solution, we see that we find a matrix decomposition which fits the matrix with very small relative error (given
+            the stopping tolerance of <tt>1e-5</tt> used by the optimizer).
+         </p><pre class="codeinput">[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+</pre><pre class="codeoutput">
+ans =
+
+   5.4828e-06
+
+</pre><p><hr></p>
+         <h2>References<a name="20"></a></h2>
+         <p>[1] Fletcher, R. &amp; Reeves, C.M. (1964). Function minimization by conjugate gradients. <i>The Computer Journal</i>, 7, 149-154.
+         </p>
+         <p>[2] Hestenes, M. R. and Stiefel, E. (1952). Methods of conjugate gradients for solving linear systems. <i>J. Res. Nat. Bur. Standards Sec. B.</i>, 48, 409-436.
+         </p>
+         <p>[3] Nocedal, J. and Wright S. J. (1999). <i>Numerical Optimization</i>. Springer.
+         </p>
+         <p>[4] Polak, E. and Ribiere, G. (1969). Note sur la convergence de methods de directions conjugres. <i>Revue Francaise Informat. Recherche Operationnelle</i>, 16, 35-43.
+         </p><br><table width="100%" bgcolor="#CCFFDD">
+            <tr>
+               <td align="left"><b>Poblano Toolbox</b></td>
+            </tr>
+         </table>
+         <p class="footer">
+            &copy;2009-2010, Sandia Corporation. Documentation created with MATLAB&reg; 7.9<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Nonlinear Conjugate Gradient Optimization
+% Nonlinear conjugate gradient (NCG) methods [3] are used to solve 
+% unconstrained nonlinear optimization problems. They are extensions of the
+% conjugate gradient iterative method for solving linear systems adapted to
+% solve unconstrained nonlinear optimization problems.
+%
+% The Poblano function for the nonlinear conjugate gradient methods is
+% called |ncg|.
+%%
+%
+% <html><hr></html>
+%% Method Description
+%
+% The general steps of NCG methods are given below in high-level
+% pseudo-code:
+%%
+%
+% 
+% $$
+% \begin{tabular}{ll}
+% \emph{1.} & Input: $x_0$, a starting point\\
+% \emph{2.} & Evaluate $f_0 = f(x_0), g_0 = \nabla f(x_0)$\\
+% \emph{3.} & Set $p_0 = -g_0, i = 0$\\
+% \emph{4.} & \textbf{while} $\|g_i\| > 0$\\
+% \emph{5.} & \qquad Compute a step length $\alpha_i$ and set $x_{i+1} = x_i + \alpha_i p_i$\\
+% \emph{6.} & \qquad Set $g_i = \nabla f(x_{i+1})$\\
+% \emph{7.} & \qquad Compute $\beta_{i+1}$\\
+% \emph{8.} & \qquad Set $p_{i+1} = -g_{i+1} + \beta_{i+1} p_i$\\
+% \emph{9.} & \qquad Set $i = i + 1$\\
+% \emph{10.} & \textbf{end while}\\
+% \emph{11.} & Output: $x_i \approx x^*$\\
+% \end{tabular}
+% $$
+%
+%% 
+% *Conjugate direction updates*
+%
+% The computation of $\beta_{i+1}$ in Step 7 above leads to different NCG
+% methods. The update methods for $\beta_{i+1}$ available in Poblano are
+% listed below. Note that the special case of $\beta_{i+1} = 0$ leads to
+% the steepest descent method [3], which is available by specifying this
+% update using the input parameter described in the <B_ncg_docs.html#9
+% Method Specific Input Parameters> section below.
+%%
+%
+% _Fletcher-Reeves_ [1]:
+%
+% $$\beta_{i+1} = \frac{g_{i+1}^T {-} g_{i+1}}{g_{i}^T g_{i}} $$ 
+%
+% _Polak-Ribiere_ [4]:
+%
+% $$\beta_{i+1} = \frac{g_{i+1}^T (g_{i+1} {-} g_{i})}{g_{i}^T g_{i}} $$
+%
+% _Hestenes-Stiefel_ [2]:
+%
+% $$\beta_{i+1} = \frac{g_{i+1}^T (g_{i+1} {-} g_{i})}{p_i^T (g_{i+1} {-} g_{i})} $$
+%
+%% 
+% *Negative update coefficients*
+%
+% In cases where the update coefficient $\beta_{i+1} < 0$, it is 
+% set to $0$ to avoid directions that are not descent directions [3]. 
+%% 
+% *Restart procedures*
+%
+% The NCG iterations are restarted every _n_ iterations, where _n_ is 
+% specified by user by setting the |RestartIters| parameter.
+%
+% Another restart modification available in |ncg| that was suggested by
+% Nocedal and Wright [3] is taking a step in the direction of steepest
+% descent when two consecutive gradients are far from orthogonal.
+% Specifically, a steepest descent step is taking when
+% 
+% $$\frac{|g_{i+1}^T g_{i}|}{\|g_{i+1}\|} \geq \nu $$ 
+%
+% where $\nu$ is specified by the user by setting the |RestartNWTol| 
+% parameter. This modification is off by default, but can be 
+% used by setting the |RestartNW| parameter to "true".
+%%
+%
+% <html><hr></html>
+%% Method Specific Input Parameters
+%
+% The input parameters specific to the |ncg| method are presented below.
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%
+%  Update        Conjugate direction update {'PR'}
+%    'FR'        Fletcher-Reeves
+%    'PR'        Polak-Ribiere 
+%    'HS'        Hestenes-Stiefel
+%    'SD'        Steepest Decsent
+%
+%  RestartIters  Number of iterations to run before conjugate direction restart {20}
+%
+%  RestartNW     Flag to use restart heuristic of Nocedal and Wright {false}
+%
+%  RestartNWTol  Tolerance for Nocedal and Wright restart heuristic {0.1}
+%%
+%
+% <html><hr></html>
+%% Default Input Parameters
+% The default input parameters are returned with the following call to
+% |ncg|:
+params = ncg('defaults')
+%%
+% 
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%%
+%
+% <html><hr></html>
+%% Examples
+%%
+% *Example 1* (from <A4_poblano_examples_docs.html#4 Poblano Examples>)
+%
+% In this example, we have $x \in R^{10}$ and $a = 3$, and use a random
+% starting point.
+randn('state',0);
+x0 = randn(10,1)
+out = ncg(@(x) example1(x,3), x0)
+%%
+% *Example 2* (from <A4_poblano_examples_docs.html#11 Poblano Examples>)
+%
+% In this example, we compute a rank-4 approximation to a $4 \times 4$
+% Pascal matrix (generated using the Matlab function |pascal(4)|). The
+% starting point is random vector. Note that in the interest of space,
+% Poblano is set to display only the final iteration is this example.
+m = 4; n = 4; k = 4; 
+Data.rank = k; 
+Data.A = pascal(m);
+randn('state',0);
+x0 = randn((m+n)*k,1);
+out = ncg(@(x) example2(x,Data), x0, 'Display', 'final')
+%%
+%
+% The fact that |out.ExitFlag| > 0 indicates that the method did not
+% converge to the specified tolerance (i.e., using the default |StopTol|
+% input parameter value of |1e-5|). This exit flag indicates that the
+% maximum number of function evaluations was exceeded. (See the
+% <A3_poblano_out_docs.html Optimization Output Parameters> documentation
+% for more details.) Increasing the number of maximum numbers of function
+% evaluations and iterations allowed, the optimizer converges to a solution
+% within the specified tolerance. 
+out = ncg(@(x) example2(x,Data), x0, 'MaxIters',1000, ...
+    'MaxFuncEvals',10000,'Display','final')
+%%
+%
+% Verifying the solution, we see that we find a matrix decomposition which
+% fits the matrix with very small relative error (given the stopping
+% tolerance of |1e-5| used by the optimizer).
+[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Fletcher, R. & Reeves, C.M. (1964). 
+% Function minimization by conjugate gradients. 
+% _The Computer Journal_, 7, 149-154.
+%
+% [2] Hestenes, M. R. and Stiefel, E. (1952). 
+% Methods of conjugate gradients for solving linear systems. 
+% _J. Res. Nat. Bur. Standards Sec. B._, 48, 409-436.
+%
+% [3] Nocedal, J. and Wright S. J. (1999). 
+% _Numerical Optimization_. Springer.
+%
+% [4] Polak, E. and Ribiere, G. (1969). 
+% Note sur la convergence de methods de directions conjugres. 
+% _Revue Francaise Informat. Recherche Operationnelle_, 16, 35-43.
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

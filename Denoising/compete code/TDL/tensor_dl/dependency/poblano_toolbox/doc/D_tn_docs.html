@@ -1,0 +1,469 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Truncated Newton Optimization</title>
+      <meta name="generator" content="MATLAB 7.9">
+      <meta name="date" content="2010-03-17">
+      <meta name="m-file" content="D_tn_docs"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: left;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <table width="100%" bgcolor="#CCFFDD">
+         <tr>
+            <td><b>Poblano Toolbox</b></td>
+         </tr>
+      </table><br><div class="content">
+         <h1>Truncated Newton Optimization</h1>
+         <introduction>
+            <p>Truncated Newton (TN) methods for minimization are Newton methods in which the Newton direction is only approximated at each
+               iteration (thus reducing computation). Furthermore, the Poblano implementation of the truncated Newton method does not require
+               an explicit Hessian matrix in the computation of the approximate Newton direction (thus reducing storage requirements).
+            </p>
+            <p>The Poblano function for the truncated Newton method is called <tt>tn</tt>.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">Introduction</a></li>
+               <li><a href="#7">Method Specific Input Parameters</a></li>
+               <li><a href="#9">Default Input Parameters</a></li>
+               <li><a href="#12">Examples</a></li>
+               <li><a href="#20">References</a></li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Introduction<a name="2"></a></h2>
+         <p>The general steps of the TN method in Poblano is given below in high-level pseudo-code [1]:</p>
+         <p><img vspace="5" hspace="5" src="D_tn_docs_eq81624.png"> </p>
+         <p><b>Notes</b></p>
+         <p>In Step 5, the linear conjugate gradient (CG) method stopping tolerance is allowed to change at each iteration. The input
+            parameter <tt>CGTolType</tt> determines how <img vspace="5" hspace="5" src="D_tn_docs_eq17182.png">  is computed.
+         </p>
+         <p>In Step 6,</p>
+         <div>
+            <ul>
+               <li>One of Matlab's CG methods is used to solve for <img vspace="5" hspace="5" src="D_tn_docs_eq95956.png"> : <tt>symmlq</tt> (designed for symmetric indefinite systems) or <tt>pcg</tt> (the classical CG method for symmetric positive definite systems). The input parameter <tt>CGSolver</tt> controls the choice of CG method to use.
+               </li>
+            </ul>
+         </div>
+         <div>
+            <ul>
+               <li>The maximum number of CG iterations is specified using the input parameter <tt>CGIters</tt>.
+               </li>
+            </ul>
+         </div>
+         <div>
+            <ul>
+               <li>The CG method stops when <img vspace="5" hspace="5" src="D_tn_docs_eq37600.png">  .
+               </li>
+            </ul>
+         </div>
+         <div>
+            <ul>
+               <li>In the CG method, matrix-vector products involving <img vspace="5" hspace="5" src="D_tn_docs_eq89032.png">  times a vector <img vspace="5" hspace="5" src="D_tn_docs_eq77996.png">  are approximated using the following finite difference approximation [1]: <img vspace="5" hspace="5" src="D_tn_docs_eq14236.png"> </li>
+            </ul>
+         </div>
+         <div>
+            <ul>
+               <li>The difference step, <img vspace="5" hspace="5" src="D_tn_docs_eq24873.png"> , is specified using the input parameter <tt>HessVecFDStep</tt>. The computation of the finite difference approximation is performed using the <tt>hessvec_fd</tt> provided with Poblano.
+               </li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Method Specific Input Parameters<a name="7"></a></h2>
+         <p>The input parameters specific to the <tt>tn</tt> method are presented below. See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.
+         </p><pre>CGSolver         Matlab CG method to use {'symmlq'}
+  'symmlq'       symmlq (designed for symmetric indefinite systems)
+  'pcg'          pcg (designed for symmetric positive definite systems)</pre><pre>CGIters          Maximum number of conjugate gradient iterations allowed {5}</pre><pre>CGTolType        CG stopping tolerance type used {'quadratic'}
+  'quadratic'    ||R|| / ||G|| &lt;  min(0.5,||G||)
+  'superlinear'  ||R|| / ||G|| &lt;  min(0.5,sqrt(||G||))
+  'fixed'        ||R|| &lt; CGTol
+                 where R is the residual and G is the gradient of FUN at X</pre><pre>CGTol            CG stopping tolerance when CGTolType is 'fixed' {1e-6}</pre><pre>HessVecFDStep    Hessian vector product finite difference step {1e-10}
+  0              Use iterate-based step: 1e-8*(1+||X||)
+  &gt;0             Fixed value to use at the difference step</pre><p><hr></p>
+         <h2>Default Input Parameters<a name="9"></a></h2>
+         <p>The default input parameters are returned with the following call to <tt>tn</tt>:
+         </p><pre class="codeinput">params = tn(<span class="string">'defaults'</span>)
+</pre><pre class="codeoutput">
+params = 
+
+                   CGIters: 5
+                  CGSolver: 'symmlq'
+                     CGTol: 1e-06
+                 CGTolType: 'quadratic'
+                   Display: 'iter'
+             HessVecFDStep: 1e-10
+           LineSearch_ftol: 0.0001
+           LineSearch_gtol: 0.01
+    LineSearch_initialstep: 1
+         LineSearch_maxfev: 20
+         LineSearch_method: 'more-thuente'
+         LineSearch_stpmax: 1e+15
+         LineSearch_stpmin: 1e-15
+           LineSearch_xtol: 1e-15
+              MaxFuncEvals: 100
+                  MaxIters: 100
+                RelFuncTol: 1e-06
+                   StopTol: 1e-05
+                 TraceFunc: 0
+            TraceFuncEvals: 0
+                 TraceGrad: 0
+             TraceGradNorm: 0
+              TraceRelFunc: 0
+                    TraceX: 0
+
+</pre><p>See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.
+         </p>
+         <p><hr></p>
+         <h2>Examples<a name="12"></a></h2>
+         <p>Below are the results of using the <tt>tn</tt> method in Poblano to solve example problems solved using the <tt>ncg</tt> method in the <a href="B_ncg_docs.html">Nonlinear Conjugate Gradient Optimization</a> and <tt>lbfgs</tt> method in the <a href="C_lmbfgs_docs.html">Limited-Memory BFGS Optimization</a> documentation.
+         </p>
+         <p><b>Example 1</b> (from <a href="A4_poblano_examples_docs.html#4">Poblano Examples</a>)
+         </p>
+         <p>In this example, we have <img vspace="5" hspace="5" src="D_tn_docs_eq94234.png">  and <img vspace="5" hspace="5" src="D_tn_docs_eq37777.png"> , and use a random starting point.
+         </p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+x0 = randn(10,1)
+out = tn(@(x) example1(x,3), x0)
+</pre><pre class="codeoutput">
+x0 =
+
+     -0.43256
+      -1.6656
+      0.12533
+      0.28768
+      -1.1465
+       1.1909
+       1.1892
+    -0.037633
+      0.32729
+      0.17464
+
+ Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       1.80545257       0.73811114
+tn: line search warning = 0
+     1        10      -4.10636797       0.54564169
+     2        18      -4.21263331       0.41893997
+tn: line search warning = 0
+     3        28      -7.18352472       0.36547546
+     4        34      -8.07095085       0.11618518
+tn: line search warning = 0
+     5        41      -9.87251163       0.15057476
+     6        46      -9.99999862       0.00049753
+     7        50     -10.00000000       0.00000000
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [10x1 double]
+            F: -10
+            G: [10x1 double]
+    FuncEvals: 50
+        Iters: 7
+
+</pre><p>Note that in this example the line search in <tt>tn</tt> method displays a warning during iterations 1, 3 and 5, indicating that the norm of the search direction is nearly 0. In
+            those cases, the steepest descent direction is used for the search direction during those iterations.
+         </p>
+         <p><b>Example 2</b></p>
+         <p>In this example, we compute a rank 2 approximation to a <img vspace="5" hspace="5" src="D_tn_docs_eq12912.png">  Pascal matrix (generated using the Matlab function <tt>pascal(4)</tt>). The starting point is a random vector. Note that in the interest of space, Poblano is set to display only the final iteration
+            is this example.
+         </p><pre class="codeinput">m = 4; n = 4; k = 4;
+Data.rank = k;
+Data.A = pascal(m);
+randn(<span class="string">'state'</span>,0);
+x0 = randn((m+n)*k,1);
+out = tn(@(x) example2(x,Data), x0, <span class="string">'Display'</span>, <span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    16       105       0.00013951       0.00060739
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 2
+            X: [32x1 double]
+            F: 0.00013951
+            G: [32x1 double]
+    FuncEvals: 105
+        Iters: 16
+
+</pre><p>As for the <tt>ncg</tt> and <tt>lbfgs</tt> methods, the fact that <tt>out.ExitFlag</tt> &gt; 0 indicates that the method did not converge to the specified tolerance (i.e., the default <tt>StopTol</tt> input parameter value of <tt>1e-5</tt>). Since the maximum number of function evaluations was exceeded, we can increasing the number of maximum numbers of function
+            evaluations and iterations allowed, and the optimizer converges to a solution within the specified tolerance.
+         </p><pre class="codeinput">out = tn(@(x) example2(x,Data), x0, <span class="string">'MaxIters'</span>,1000, <span class="keyword">...</span>
+    <span class="string">'MaxFuncEvals'</span>,10000,<span class="string">'Display'</span>,<span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    21       155       0.00000001       0.00000606
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [32x1 double]
+            F: 9.4184e-09
+            G: [32x1 double]
+    FuncEvals: 155
+        Iters: 21
+
+</pre><p>Verifying the solution, we see that we find a matrix decomposition which fits the matrix with very small relative error (given
+            the stopping tolerance of <tt>1e-5</tt> used by the optimizer).
+         </p><pre class="codeinput">[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+</pre><pre class="codeoutput">
+ans =
+
+   4.4426e-06
+
+</pre><p>Again, in Example 2, we see that <tt>tn</tt> exhibits different behavior from that of the <tt>ncg</tt> and <tt>lbfgs</tt> methods. Thus, it is recommended that several test runs on smaller problems are performed initially using the different methods
+            to help decide which method and set of parameters works best for a particular class of problems.
+         </p>
+         <p><hr></p>
+         <h2>References<a name="20"></a></h2>
+         <p>[1] Dembo, R.S. and and Steihaug, T. (1983). Truncated-Newton Algorithms for Large-Scale Unconstrained Minimization., <i>Mathematical Programming</i>, 26, 190-212.
+         </p><br><table width="100%" bgcolor="#CCFFDD">
+            <tr>
+               <td align="left"><b>Poblano Toolbox</b></td>
+            </tr>
+         </table>
+         <p class="footer">
+            &copy;2009-2010, Sandia Corporation. Documentation created with MATLAB&reg; 7.9<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Truncated Newton Optimization
+% Truncated Newton (TN) methods for minimization are Newton methods in
+% which the Newton direction is only approximated at each iteration (thus
+% reducing computation). Furthermore, the Poblano implementation of the
+% truncated Newton method does not require an explicit Hessian matrix in
+% the computation of the approximate Newton direction (thus reducing
+% storage requirements).
+%
+% The Poblano function for the truncated Newton method is called |tn|.
+%%
+%
+% <html><hr></html>
+%% Introduction
+%
+% The general steps of the TN method in Poblano is given below in high-level
+% pseudo-code [1]:
+%%
+%
+%
+% $$
+%  \begin{tabular}{ll}
+%  \emph{1.} & Input: $x_0$, a starting point\\
+%  \emph{2.} & Evaluate $f_0 = f(x_0), g_0 = \nabla f(x_0)$\\
+%  \emph{3.} & Set $i=0$\\
+%  \emph{4.} & \textbf{while} $\|g_i\| > 0$\\
+%  \emph{5.} & \qquad Compute the conjugate gradient stopping tolerance, $\eta_i$\\
+%  \emph{6.} & \qquad Compute $p_i$ by solving $\nabla^2f(x_i)p = -g_i$ using a linear conjugate gradient (CG) method\\
+%  \emph{7.} & \qquad Compute a step length $\alpha_i$ and set $x_{i+1} = x_i + \alpha_i p_i$\\
+%  \emph{8.} & \qquad Set $g_i = \nabla f(x_{i+1})$\\
+%  \emph{9.} & \qquad Set $i = i + 1$\\
+%  \emph{10.} & \textbf{end while}\\
+%  \emph{11.} & Output: $x_i \approx x^*$\\
+%  \end{tabular}
+% $$
+%% 
+% *Notes*
+%
+% In Step 5, the linear conjugate gradient (CG) method stopping tolerance
+% is allowed to change at each iteration. The input parameter
+% |CGTolType| determines how $\eta_i$ is computed.
+%%
+% 
+% In Step 6, 
+%
+% * One of Matlab's CG methods is used to solve for $p_i$: |symmlq|
+% (designed for symmetric indefinite systems) or |pcg| (the classical CG
+% method for symmetric positive definite systems). The input parameter
+% |CGSolver| controls the choice of CG method to use.
+%
+% * The maximum number of CG iterations is specified using the input
+% parameter |CGIters|.
+%
+% * The CG method stops when $\|-g_i - \nabla^2f(x_i)p_i\| \leq \eta_i\|g_i\|$ .
+%
+% * In the CG method, matrix-vector products involving $\nabla^2f(x_i)$ times
+% a vector $v$ are approximated using the following finite difference
+% approximation [1]:
+% $\nabla^2f(x_i)v \approx \frac{\nabla f(x_i + \sigma v) - \nabla f(x_i)}{\sigma}$
+%
+% * The difference step, $\sigma$, is specified using the input parameter
+% |HessVecFDStep|. The computation of the finite difference approximation
+% is performed using the |hessvec_fd| provided with Poblano.
+%%
+%
+% <html><hr></html>
+%% Method Specific Input Parameters
+%
+% The input parameters specific to the |tn| method are presented below.
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%
+%  CGSolver         Matlab CG method to use {'symmlq'}
+%    'symmlq'       symmlq (designed for symmetric indefinite systems) 
+%    'pcg'          pcg (designed for symmetric positive definite systems)
+%
+%  CGIters          Maximum number of conjugate gradient iterations allowed {5}
+%
+%  CGTolType        CG stopping tolerance type used {'quadratic'}
+%    'quadratic'    ||R|| / ||G|| <  min(0.5,||G||)
+%    'superlinear'  ||R|| / ||G|| <  min(0.5,sqrt(||G||))
+%    'fixed'        ||R|| < CGTol
+%                   where R is the residual and G is the gradient of FUN at X
+%
+%  CGTol            CG stopping tolerance when CGTolType is 'fixed' {1e-6}
+%
+%  HessVecFDStep    Hessian vector product finite difference step {1e-10}
+%    0              Use iterate-based step: 1e-8*(1+||X||)
+%    >0             Fixed value to use at the difference step 
+%%
+%
+% <html><hr></html>
+%% Default Input Parameters
+% The default input parameters are returned with the following call to
+% |tn|:
+params = tn('defaults')
+%%
+% 
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%%
+%
+% <html><hr></html>
+%% Examples
+% Below are the results of using the |tn| method in Poblano to solve 
+% example problems solved using the |ncg| method in the <B_ncg_docs.html
+% Nonlinear Conjugate Gradient Optimization> and |lbfgs| method in the
+% <C_lmbfgs_docs.html Limited-Memory BFGS Optimization> documentation.
+%%
+% *Example 1* (from <A4_poblano_examples_docs.html#4 Poblano Examples>)
+%
+% In this example, we have $x \in R^{10}$ and $a = 3$, and use a random
+% starting point.
+randn('state',0);
+x0 = randn(10,1)
+out = tn(@(x) example1(x,3), x0)
+%%
+%
+% Note that in this example the line search in |tn| method displays a
+% warning during iterations 1, 3 and 5, indicating that the norm of the
+% search direction is nearly 0. In those cases, the steepest descent
+% direction is used for the search direction during those iterations.
+%%
+% *Example 2*
+%
+% In this example, we compute a rank 2 approximation to a $4 \times 4$
+% Pascal matrix (generated using the Matlab function |pascal(4)|). The
+% starting point is a random vector. Note that in the interest of space,
+% Poblano is set to display only the final iteration is this example.
+m = 4; n = 4; k = 4; 
+Data.rank = k; 
+Data.A = pascal(m);
+randn('state',0);
+x0 = randn((m+n)*k,1);
+out = tn(@(x) example2(x,Data), x0, 'Display', 'final')
+%%
+%
+% As for the |ncg| and |lbfgs| methods, the fact that
+% |out.ExitFlag| > 0 indicates that the method did not
+% converge to the specified tolerance (i.e., the default |StopTol|
+% input parameter value of |1e-5|). Since the maximum number of function
+% evaluations was exceeded, we can increasing the number of maximum numbers
+% of function evaluations and iterations allowed, and the optimizer
+% converges to a solution within the specified tolerance.
+out = tn(@(x) example2(x,Data), x0, 'MaxIters',1000, ...
+    'MaxFuncEvals',10000,'Display','final')
+%%
+%
+% Verifying the solution, we see that we find a matrix decomposition which
+% fits the matrix with very small relative error (given the stopping
+% tolerance of |1e-5| used by the optimizer).
+[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+%%
+%
+% Again, in Example 2, we see that |tn| exhibits different behavior from
+% that of the |ncg| and |lbfgs| methods. Thus, it is
+% recommended that several test runs on smaller problems are performed
+% initially using the different methods to help decide which method and set
+% of parameters works best for a particular class of problems.
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Dembo, R.S. and and Steihaug, T. (1983). Truncated-Newton Algorithms for
+% Large-Scale Unconstrained Minimization., _Mathematical Programming_, 26, 190-212.
+%
+##### SOURCE END #####
+-->
+   </body>
+</html>

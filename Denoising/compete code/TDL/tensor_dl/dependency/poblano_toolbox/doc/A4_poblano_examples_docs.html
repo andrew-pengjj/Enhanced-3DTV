@@ -1,0 +1,416 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Poblano Examples</title>
+      <meta name="generator" content="MATLAB 7.9">
+      <meta name="date" content="2010-03-17">
+      <meta name="m-file" content="A4_poblano_examples_docs"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: left;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <table width="100%" bgcolor="#CCFFDD">
+         <tr>
+            <td><b>Poblano Toolbox</b></td>
+         </tr>
+      </table><br><div class="content">
+         <h1>Poblano Examples</h1>
+         <introduction>
+            <p>This section describes the examples provided with Poblano. These examples can be used as templates for other function/gradient
+               M-files.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">Solving a Problem Using Poblano</a></li>
+               <li><a href="#4">Example 1: Multivariate Sum</a></li>
+               <li><a href="#11">Example 2: Matrix Decomposition</a></li>
+               <li><a href="#20">References</a></li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Solving a Problem Using Poblano<a name="2"></a></h2>
+         <p>To solve a problem using Poblano, the following steps are performed:</p>
+         <div>
+            <ul>
+               <li><b>Step 1: Create M-file for objective and gradient.</b> An M-file which takes a vector as input and provides a scalar function value and gradient vector (the same size as the input)
+                  must be provided to the Poblano optimizers.
+               </li>
+               <li><b>Step 2: Call the optimizer.</b> One of the Poblano optimizers is called, taking an anonymous function handle to the function to be minimized, a starting
+                  point, and an optional set of optimizer parameters as inputs.
+               </li>
+            </ul>
+         </div>
+         <p>Poblano provides two example function/gradient M-files:</p>
+         <div>
+            <ul>
+               <li><tt>example1</tt>: simple multivariate function
+               </li>
+               <li><tt>example2</tt>: more complicated function of a matrix variable
+               </li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Example 1: Multivariate Sum<a name="4"></a></h2>
+         <p>The following example is a simple multivariate function, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq21265.png"> , that can be minimized using Poblano:
+         </p>
+         <p><img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq24693.png"> </p>
+         <p><img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq37179.png"> </p>
+         <p>where <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq34276.png">  is a scalar parameter.
+         </p>
+         <p>Listed below are the contents of the <tt>example1.m</tt> M-file distributed with the Poblano code. This is an example of a self-contained function requiring a vector of independent
+            variables and an <i>optional</i> scalar input parameter for <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq34276.png"> .
+         </p><pre>   function [f,g]=example1(x,a)
+        if nargin &lt; 2, a = 1; end
+        f = sum(sin(a*x));
+        g = a*cos(a*x);</pre><p>The following presents a call to <tt>ncg</tt> optimizer using the default parameters (see <a href="B_ncg_docs.html">NCG method</a> documentation for more details) along with the information displayed and output return by Poblano. By default, at each iteration
+            Poblano displays the number of function evaluations (<tt>FuncEvals</tt>), the function value at the current iterate (<tt>F(X)</tt>), and the Euclidean norm of the scaled gradient at the current iterate (<tt>|</tt><tt>|G(X)</tt><tt>|</tt><tt>|/N</tt>, where <tt>N</tt> is the size of <tt>X</tt>) for each iteration. The output of Poblano optimizers is a Matlab structure containing the solution. See the <a href="A3_poblano_out_docs.html">Output Parameters</a> documentation for more details.
+         </p><pre class="codeinput">out = ncg(@(x) example1(x,3), pi/4)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       0.70710678       2.12132034
+     1        14      -0.99998885       0.01416497
+     2        16      -1.00000000       0.00000147
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: 70.686
+            F: -1
+            G: -1.4734e-06
+    FuncEvals: 16
+        Iters: 2
+
+</pre><p>The problem dimension, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq05153.png"> , of <tt>example1</tt> is determined by the size of the initial guess. For example, to solve a problem with <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq15843.png"> , simply use an initial guess vector of size <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq15843.png">  when calling the Poblano optimizer:
+         </p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+x0 = randn(1e6,1);
+out = ncg(@(x) example1(x,3), x0, <span class="string">'Display'</span>, <span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    15        60 -999993.22770203       0.00000649
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [1000000x1 double]
+            F: -9.9999e+05
+            G: [1000000x1 double]
+    FuncEvals: 60
+        Iters: 15
+
+</pre><h2>Example 2: Matrix Decomposition<a name="11"></a></h2>
+         <p>The following example is a more complicated function involving matrix variables. As the Poblano methods require scalar functions
+            with vector inputs, variable matrices must be reshaped into vectors first. The problem in this example is to find a rank-$k$
+            decomposition, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq19084.png"> , of a <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq49857.png">  matrix, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq31461.png"> , which minimizes the Frobenius norm of the fit
+         </p>
+         <p><img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq18009.png"> </p>
+         <p><img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq35707.png"> </p>
+         <p><img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq06715.png"> </p>
+         <p>where <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq88356.png">  is a matrix with rank <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq31302.png"> , <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq72809.png"> , and <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq47284.png"> . This problem can be solved using Poblano by providing an M-file that computes the function and gradient shown above but
+            that takes <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq15166.png">  and <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq20021.png">  as input in vectorized form.
+         </p>
+         <p>This problem can be solved using Poblano by providing an M-?le that computes the function and gradient shown above but that
+            takes U and V as input in vectorized form.
+         </p>
+         <p>Listed below are the contents of the <tt>example2.m</tt> M-file distributed with the Poblano code. Note that the input <tt>Data</tt> is required and is a structure containing the matrix to be decomposed, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq31461.png"> , and the desired rank, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq86607.png"> . This example also illustrates how the vectorized form of the factor matrices, <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq15166.png">  and <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq20021.png"> , are converted to matrix form for the function and gradient computations.
+         </p><pre>   function [f,g]=example2(x,Data)
+        % Data setup
+        [m,n] = size(Data.A);
+        k = Data.rank;
+        U = reshape(x(1:m*k),m,k);
+        V = reshape(x(m*k+1:m*k+n*k),n,k);</pre><pre>        % Function value (residual)
+        AmUVt = Data.A-U*V';
+        f = 0.5*norm(AmUVt,'fro')^2;</pre><pre>        % First derivatives computed in matrix form
+        g = zeros((m+n)*k,1);
+        g(1:m*k) = -reshape(AmUVt*V,m*k,1);
+        g(m*k+1:end) = -reshape(AmUVt'*U,n*k,1);</pre><p>Included with Poblano are two helper functions and which can be used to generate problems instances along with starting points
+            (<tt>example2_init.m</tt>) and extract the factors <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq15166.png">  and <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq20021.png">  from a solution vector (<tt>example2_extract.m</tt>). We show an example of their use below.
+         </p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+m = 4; n = 3; k = 2;
+[x0,Data] = example2_init(m,n,k)
+out = ncg(@(x) example2(x,Data), x0, <span class="string">'RelFuncTol'</span>, 1e-16, <span class="string">'StopTol'</span>, 1e-8, <span class="keyword">...</span>
+    <span class="string">'MaxFuncEvals'</span>,1000,<span class="string">'Display'</span>,<span class="string">'final'</span>)
+</pre><pre class="codeoutput">
+x0 =
+
+     -0.58832
+       2.1832
+      -0.1364
+      0.11393
+       1.0668
+     0.059281
+    -0.095648
+     -0.83235
+      0.29441
+      -1.3362
+      0.71432
+       1.6236
+     -0.69178
+        0.858
+
+
+Data = 
+
+    rank: 2
+       A: [4x3 double]
+
+ Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    29        67       0.28420491       0.00000001
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [14x1 double]
+            F: 0.2842
+            G: [14x1 double]
+    FuncEvals: 67
+        Iters: 29
+
+</pre><p>Extracting the factors from the solution, we see that we have found a solution, since the the Euclidean norm of the difference
+            between the matrix and the approximate solution is equal to the the <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq21144.png">  singular value of <img vspace="5" hspace="5" src="A4_poblano_examples_docs_eq31461.png">  [1, Theorem 2.5.3].
+         </p><pre class="codeinput">[U,V] = example2_extract(4,3,2,out.X);
+norm_diff = norm(Data.A-U*V')
+sv = svd(Data.A);
+sv_k_plus_1 = sv(k+1)
+</pre><pre class="codeoutput">
+norm_diff =
+
+      0.75393
+
+
+sv_k_plus_1 =
+
+      0.75393
+
+</pre><p><hr></p>
+         <h2>References<a name="20"></a></h2>
+         <p>[1] Golub, G. H. and Loan, C. F. V. (1996). <i>Matrix Computations</i>. Johns Hopkins University Press.
+         </p><br><table width="100%" bgcolor="#CCFFDD">
+            <tr>
+               <td align="left"><b>Poblano Toolbox</b></td>
+            </tr>
+         </table>
+         <p class="footer">
+            &copy;2009-2010, Sandia Corporation. Documentation created with MATLAB&reg; 7.9<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Poblano Examples
+% This section describes the examples provided with Poblano. These examples
+% can be used as templates for other function/gradient M-files.
+%%
+%
+% <html><hr></html>
+%% Solving a Problem Using Poblano
+% To solve a problem using Poblano, the following steps are performed: 
+%
+% * *Step 1: Create M-file for objective and gradient.* An M-file which
+% takes a vector as input and provides a scalar function value and gradient
+% vector (the same size as the input) must be provided to the Poblano
+% optimizers. 
+% * *Step 2: Call the optimizer.* One of the Poblano optimizers is called,
+% taking an anonymous function handle to the function to be minimized, a
+% starting point, and an optional set of optimizer parameters as inputs. 
+%
+% Poblano provides two example function/gradient M-files:
+% 
+% * |example1|: simple multivariate function
+% * |example2|: more complicated function of a matrix variable
+%%
+%
+% <html><hr></html>
+%% Example 1: Multivariate Sum
+%
+% The following example is a simple multivariate function, $f_1 : R^N \to R$, 
+% that can be minimized using Poblano:
+%%
+% 
+% $$f_1(x) = \sum_{n=1}^N \sin(ax_i)$$
+%%
+% 
+% $$\left(\nabla f_1(x)\right)_i = a \cos(ax_i)\; , \quad i=1,\dots,N$
+%%
+%
+% where $a$ is a scalar parameter. 
+%%
+%
+% Listed below are the contents of the |example1.m| M-file 
+% distributed with the Poblano code. This is an example of a self-contained
+% function requiring a vector of independent variables and an
+% _optional_ scalar input parameter for $a$.
+%
+%     function [f,g]=example1(x,a)
+%          if nargin < 2, a = 1; end
+%          f = sum(sin(a*x));
+%          g = a*cos(a*x);
+%%
+% 
+% The following presents a call to |ncg| optimizer using the default
+% parameters (see <B_ncg_docs.html NCG method> documentation for more
+% details) along with the information displayed and output return by
+% Poblano. By default, at each iteration Poblano displays the number of
+% function evaluations (|FuncEvals|), the function value at the current
+% iterate (|F(X)|), and the Euclidean norm of the scaled gradient at the
+% current iterate (|||||G(X)||||||/N|, where |N| is the size of |X|) for
+% each iteration. The output of Poblano optimizers is a Matlab structure
+% containing the solution. See the <A3_poblano_out_docs.html Output
+% Parameters> documentation for more details.
+out = ncg(@(x) example1(x,3), pi/4)
+%%
+% The problem dimension, $N$, of |example1| is determined by the size of the
+% initial guess. For example, to solve a problem with $N=10^6$, simply use
+% an initial guess vector of size $N=10^6$ when calling the Poblano optimizer:
+randn('state',0);
+x0 = randn(1e6,1);
+out = ncg(@(x) example1(x,3), x0, 'Display', 'final')
+%% Example 2: Matrix Decomposition
+%
+% The following example is a more complicated function involving matrix
+% variables. As the Poblano methods require scalar functions with vector
+% inputs, variable matrices must be reshaped into vectors first. The
+% problem in this example is to find a rank-$k$ decomposition, $UV^T$, of
+% a $m \times n$ matrix, $A$, which minimizes the Frobenius norm of the fit
+%%
+%
+% $$f_2 = \frac12\| A - UV^T \|_F^2$$
+%%
+%
+% $$\nabla_U f_2 = -(A-UV^T)V$$
+%%
+%
+% $$\nabla_V f_2 = -(A-UV^T)^T U$$
+%%
+%
+% where $A \in R^{m \times n}$ is a matrix with rank $\geq k$, $U
+% \in R^{m \times k}$, and $V \in R^{n \times k}$. This problem can be
+% solved using Poblano by providing an M-file that computes the function
+% and gradient shown above but that takes $U$ and $V$ as input in
+% vectorized form.
+%
+% This problem can be solved using Poblano by providing an M-?le that
+% computes the function and gradient shown above but that takes U and V as
+% input in vectorized form.
+%%
+%
+% Listed below are the contents of the |example2.m| M-file
+% distributed with the Poblano code. Note that the input |Data| is
+% required and is a structure containing the matrix to be decomposed, $A$,
+% and the desired rank, $k$. This example also illustrates how the
+% vectorized form of the factor matrices, $U$ and $V$, are converted to
+% matrix form for the function and gradient computations.
+%
+%     function [f,g]=example2(x,Data)
+%          % Data setup
+%          [m,n] = size(Data.A);
+%          k = Data.rank;
+%          U = reshape(x(1:m*k),m,k);
+%          V = reshape(x(m*k+1:m*k+n*k),n,k);
+%
+%          % Function value (residual)
+%          AmUVt = Data.A-U*V';
+%          f = 0.5*norm(AmUVt,'fro')^2;
+%
+%          % First derivatives computed in matrix form
+%          g = zeros((m+n)*k,1);
+%          g(1:m*k) = -reshape(AmUVt*V,m*k,1);
+%          g(m*k+1:end) = -reshape(AmUVt'*U,n*k,1);
+%%
+%
+% Included with Poblano are two helper functions and which can be used to
+% generate problems instances along with starting points
+% (|example2_init.m|) and extract the factors $U$ and $V$ from a solution
+% vector (|example2_extract.m|). We show an example of their use below.
+randn('state',0);
+m = 4; n = 3; k = 2;
+[x0,Data] = example2_init(m,n,k)
+out = ncg(@(x) example2(x,Data), x0, 'RelFuncTol', 1e-16, 'StopTol', 1e-8, ...
+    'MaxFuncEvals',1000,'Display','final')
+%%
+%
+% Extracting the factors from the solution, we see that we have found a
+% solution, since the the Euclidean norm of the difference between the
+% matrix and the approximate solution is equal to the the $k+1$ singular
+% value of $A$ [1, Theorem 2.5.3].
+[U,V] = example2_extract(4,3,2,out.X);
+norm_diff = norm(Data.A-U*V')
+sv = svd(Data.A); 
+sv_k_plus_1 = sv(k+1)
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Golub, G. H. and Loan, C. F. V. (1996). _Matrix Computations_. 
+% Johns Hopkins University Press.
+%
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

@@ -1,0 +1,53 @@
+==============================================================================
+
+                                   MC-BCS-SPL
+
+                            Version 1.0, 18-jan-2011
+
+                       Copyright (C) 2011  James E. Fowler
+
+==============================================================================
+
+OVERVIEW:
+
+  These MATLAB programs implement the Motion-Compensated Block Compressed
+  Sensing - Smoothed Projected Landweber (BCS-SPL) algorithm as described in
+  paper:
+  
+    S. Mun and J. E. Fowler, "Residual Reconstruction For Block-
+    Based Compressed Sensing of Video," to appear in the Data
+    Compression Conference, 2011
+
+  Note that, since most of this code relies on random projections,
+  the results produced may differ slightly in appearance and
+  value from those of the paper.
+
+==============================================================================
+
+
+AVAILABILITY:
+
+  For updated versions of MC-BCS-SPL, as well as the article on
+  which it is based, consult:
+    http://www.ece.msstate.edu/~fowler/
+
+
+==============================================================================
+
+
+COPYRIGHT AND LICENSE INFORMATION:
+
+  Copyright (C) 2011  James E. Fowler
+  
+  The programs herein are free software; you can redistribute
+  them and/or modify them under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  All programs herein are distributed in the hope that
+  they will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+  the full text of the appropriate license for more details.
+  
+
+==============================================================================

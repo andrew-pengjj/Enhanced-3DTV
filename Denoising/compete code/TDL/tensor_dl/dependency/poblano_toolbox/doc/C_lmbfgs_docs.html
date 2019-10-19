@@ -1,0 +1,419 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Limited-Memory BFGS Optimization</title>
+      <meta name="generator" content="MATLAB 7.9">
+      <meta name="date" content="2010-03-17">
+      <meta name="m-file" content="C_lmbfgs_docs"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: left;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <table width="100%" bgcolor="#CCFFDD">
+         <tr>
+            <td><b>Poblano Toolbox</b></td>
+         </tr>
+      </table><br><div class="content">
+         <h1>Limited-Memory BFGS Optimization</h1>
+         <introduction>
+            <p>Limited-memory quasi-Newton methods [2] are a class of methods that compute and/or maintain simple, compact approximations
+               of the Hessian matrices of second derivatives, which are used determining search directions. Poblano includes the limited-memory
+               BFGS (L-BFGS) method, a variant of these methods whose Hessian approximations are based on the BFGS method (see [1] for more
+               details).
+            </p>
+            <p>The Poblano function for the L-BFGS method is called <tt>lbfgs</tt>.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">Introduction</a></li>
+               <li><a href="#7">Method Specific Input Parameters</a></li>
+               <li><a href="#9">Default Input Parameters</a></li>
+               <li><a href="#12">Examples</a></li>
+               <li><a href="#19">References</a></li>
+            </ul>
+         </div>
+         <p><hr></p>
+         <h2>Introduction<a name="2"></a></h2>
+         <p>The general steps of L-BFGS methods are given below in high-level pseudo-code [2]:</p>
+         <p><img vspace="5" hspace="5" src="C_lmbfgs_docs_eq49162.png"> </p>
+         <p><b>Computing the step direction</b></p>
+         <p>In Step 6 in the above method, the computation of the step direction is performed using the following method (assume we are
+            at iteration <img vspace="5" hspace="5" src="C_lmbfgs_docs_eq28128.png"> ) [2]:
+         </p>
+         <p><img vspace="5" hspace="5" src="C_lmbfgs_docs_eq26618.png"> </p>
+         <p><hr></p>
+         <h2>Method Specific Input Parameters<a name="7"></a></h2>
+         <p>The input parameters specific to the <tt>lbfgs</tt> method are presented below. See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.
+         </p><pre>M        Limited memory parameter {5}</pre><p><hr></p>
+         <h2>Default Input Parameters<a name="9"></a></h2>
+         <p>The default input parameters are returned with the following call to <tt>lbfgs</tt>:
+         </p><pre class="codeinput">params = lbfgs(<span class="string">'defaults'</span>)
+</pre><pre class="codeoutput">
+params = 
+
+                   Display: 'iter'
+           LineSearch_ftol: 0.0001
+           LineSearch_gtol: 0.01
+    LineSearch_initialstep: 1
+         LineSearch_maxfev: 20
+         LineSearch_method: 'more-thuente'
+         LineSearch_stpmax: 1e+15
+         LineSearch_stpmin: 1e-15
+           LineSearch_xtol: 1e-15
+                         M: 5
+              MaxFuncEvals: 100
+                  MaxIters: 100
+                RelFuncTol: 1e-06
+                   StopTol: 1e-05
+                 TraceFunc: 0
+            TraceFuncEvals: 0
+                 TraceGrad: 0
+             TraceGradNorm: 0
+              TraceRelFunc: 0
+                    TraceX: 0
+
+</pre><p>See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentationfor more details on the Poblano parameters shared across all methods.
+         </p>
+         <p><hr></p>
+         <h2>Examples<a name="12"></a></h2>
+         <p>Below are the results of using the <tt>lbfgs</tt> method in Poblano to solve example problems solved using the <tt>ncg</tt> method in the <a href="B_ncg_docs.html">Nonlinear Conjugate Gradient Optimization</a> documentation. Note that the different methods lead to slightly different solutions and a different number of function evaluations.
+         </p>
+         <p><b>Example 1</b> (from <a href="A4_poblano_examples_docs.html#4">Poblano Examples</a>)
+         </p>
+         <p>In this example, we have <img vspace="5" hspace="5" src="C_lmbfgs_docs_eq94234.png">  and <img vspace="5" hspace="5" src="C_lmbfgs_docs_eq37777.png"> , and use a random starting point.
+         </p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+x0 = randn(10,1)
+out = lbfgs(@(x) example1(x,3), x0)
+</pre><pre class="codeoutput">
+x0 =
+
+     -0.43256
+      -1.6656
+      0.12533
+      0.28768
+      -1.1465
+       1.1909
+       1.1892
+    -0.037633
+      0.32729
+      0.17464
+
+ Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       1.80545257       0.73811114
+     1         5      -4.10636797       0.54564169
+     2         9      -5.78542020       0.51884777
+     3        12      -6.92220212       0.41545340
+     4        15      -7.59202813       0.29710231
+     5        18      -7.95865922       0.25990099
+     6        21      -8.18606788       0.22457133
+     7        24      -9.21285389       0.35468422
+     8        27      -9.68427296       0.23233142
+     9        30      -9.83727919       0.16936958
+    10        32      -9.91014546       0.12619212
+    11        35      -9.94394171       0.10012075
+    12        37      -9.96737038       0.07645454
+    13        39      -9.99998661       0.00155264
+    14        40     -10.00000000       0.00002739
+    15        42     -10.00000000       0.00000010
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [10x1 double]
+            F: -10
+            G: [10x1 double]
+    FuncEvals: 42
+        Iters: 15
+
+</pre><p><b>Example 2</b> (from <a href="A4_poblano_examples_docs.html#11">Poblano Examples</a>)
+         </p>
+         <p>In this example, we compute a rank-4 approximation to a <img vspace="5" hspace="5" src="C_lmbfgs_docs_eq12912.png">  Pascal matrix (generated using the Matlab function <tt>pascal(4)</tt>). The starting point is random vector. Note that in the interest of space, Poblano is set to display only the final iteration
+            is this example.
+         </p><pre class="codeinput">m = 4; n = 4; k = 4;
+Data.rank = k;
+Data.A = pascal(m);
+randn(<span class="string">'state'</span>,0);
+x0 = randn((m+n)*k,1);
+out = lbfgs(@(x) example2(x,Data), x0, <span class="string">'Display'</span>, <span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    46       100       0.00000584       0.00032464
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 2
+            X: [32x1 double]
+            F: 5.8416e-06
+            G: [32x1 double]
+    FuncEvals: 100
+        Iters: 46
+
+</pre><p>As for the <tt>ncg</tt> method, the fact that <tt>out.ExitFlag</tt> &gt; 0 indicates that the method did not converge to the specified tolerance (i.e., using the default <tt>StopTol</tt> input parameter value of <tt>1e-5</tt>). Since the maximum number of function evaluations was exceeded, we can increasing the number of maximum numbers of function
+            evaluations and iterations allowed, and the optimizer converges to a solution within the specified tolerance.
+         </p><pre class="codeinput">out = lbfgs(@(x) example2(x,Data), x0, <span class="string">'MaxIters'</span>,1000, <span class="keyword">...</span>
+    <span class="string">'MaxFuncEvals'</span>,10000,<span class="string">'Display'</span>,<span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    67       143       0.00000000       0.00000602
+
+out = 
+
+       Params: [1x1 inputParser]
+     ExitFlag: 0
+            X: [32x1 double]
+            F: 3.3956e-09
+            G: [32x1 double]
+    FuncEvals: 143
+        Iters: 67
+
+</pre><p>Verifying the solution, we see that we find a matrix decomposition which fits the matrix with very small relative error (given
+            the stopping tolerance of <tt>1e-5</tt> used by the optimizer).
+         </p><pre class="codeinput">[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+</pre><pre class="codeoutput">
+ans =
+
+   2.5471e-06
+
+</pre><p>For Example 2, we see that <tt>lbfgs</tt> requires slightly fewer function evaluations than <tt>ncg</tt> to solve the problem (143 versus 175). Performance of the different methods in Poblano is dependent on both the method and
+            the particular parameters chosen. Thus, it is recommended that several test runs on smaller problems are performed initially
+            using the different methods to help decide which method and set of parameters works best for a particular class of problems.
+         </p>
+         <p><hr></p>
+         <h2>References<a name="19"></a></h2>
+         <p>[1] Dennis, Jr., J. E. and Schnabel, R. B. (1996). <i>Numerical Methods for Unconstrained Optimization and Nonlinear Equations</i>. SIAM.
+         </p>
+         <p>[2] Nocedal, J. and Wright S. J. (1999). <i>Numerical Optimization</i>. Springer.
+         </p><br><table width="100%" bgcolor="#CCFFDD">
+            <tr>
+               <td align="left"><b>Poblano Toolbox</b></td>
+            </tr>
+         </table>
+         <p class="footer">
+            &copy;2009-2010, Sandia Corporation. Documentation created with MATLAB&reg; 7.9<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Limited-Memory BFGS Optimization
+% Limited-memory quasi-Newton methods [2] are a class of methods that
+% compute and/or maintain simple, compact approximations of the Hessian
+% matrices of second derivatives, which are used determining search
+% directions. Poblano includes the limited-memory BFGS (L-BFGS) method, a
+% variant of these methods whose Hessian approximations are based on the
+% BFGS method (see [1] for more details).
+%
+% The Poblano function for the L-BFGS method is called |lbfgs|.
+%%
+%
+% <html><hr></html>
+%% Introduction
+% The general steps of L-BFGS methods are given below in high-level
+% pseudo-code [2]:
+%%
+%
+% 
+% $$
+% \begin{tabular}{ll}
+% \emph{1.} & Input: $x_0$, a starting point; $M > 0$, an integer\\
+% \emph{2.} & Evaluate $f_0 = f(x_0)$, $g_0 = \nabla f(x_0)$\\
+% \emph{3.} & Set $p_0 = -g_0$, $\gamma_0 = 1$, $i = 0$\\
+% \emph{4.} & \textbf{while} $\|g_i\| > 0$\\
+% \emph{5.} & \qquad Choose an initial Hessian approximation: $H_i^0 = \gamma_i I$\\
+% \emph{6.} & \qquad Compute a step direction $p_i = -r$ using {\tt TwoLoopRecursion} method\\
+% \emph{7.} & \qquad Compute a step length $\alpha_i$ and set $x_{i+1} = x_i + \alpha_i p_i$\\
+% \emph{8.} & \qquad Set $g_i = \nabla f(x_{i+1})$\\
+% \emph{9.} & \qquad \textbf{if} $i > M$\\
+% \emph{10.} & \qquad \qquad Discard vectors $\left\{s_{i-m}, y_{i-m}\right\}$ from storage\\
+% \emph{11.} & \qquad \textbf{end if}\\
+% \emph{12.} & \qquad \qquad Set and store $s_i = x_{i+1}-x_i$ and $y_i = g_{i+1} - g_i$\\
+% \emph{13.} & \qquad Set $i = i + 1$\\
+% \emph{14.} & \textbf{end while}\\
+% \emph{15.} & Output: $x_i \approx x^*$\\
+% \end{tabular}
+% $$
+%
+%% 
+% *Computing the step direction*
+%
+% In Step 6 in the above method, the computation of the step direction is
+% performed using the following method (assume we are at iteration $i$) [2]:
+%%
+%
+% $$
+% \begin{tabular}{ll}
+% \multicolumn{2}{l}{\tt TwoLoopRecursion}\\
+% \emph{1.} & $q = g_i$\\
+% \emph{2.} & \textbf{for} $k = i-1, i-2, \dots, i-m$\\
+% \emph{3.} & \qquad $a_k = (s_k^Tq)/(y_k^Ts_k)$\\
+% \emph{4.} & \qquad $q = q - a_k y_k$\\
+% \emph{5.} & \textbf{end for}\\
+% \emph{6.} & $r = H_i^0 q$\\
+% \emph{7.} & \textbf{for} $k = i-m, i-m+1, \dots, i-1$\\
+% \emph{8.} & \qquad $b = (y_k^Tr) / (y_k^Ts_k)$\\
+% \emph{9.} & \qquad $r = r + (a_k - b)s_k$\\
+% \emph{10.} & \textbf{end for}\\
+% \emph{11.} & Output: $r = H_ig_i$\\
+% \end{tabular}
+% $$
+%%
+%
+% <html><hr></html>
+%% Method Specific Input Parameters
+%
+% The input parameters specific to the |lbfgs| method are presented below.
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%
+%  M        Limited memory parameter {5}
+%%
+%
+% <html><hr></html>
+%% Default Input Parameters
+% The default input parameters are returned with the following call to
+% |lbfgs|:
+params = lbfgs('defaults')
+%%
+% 
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentationfor more details on the Poblano parameters shared across
+% all methods.
+%%
+%
+% <html><hr></html>
+%% Examples
+% Below are the results of using the |lbfgs| method in Poblano to solve 
+% example problems solved using the |ncg| method in the <B_ncg_docs.html
+% Nonlinear Conjugate Gradient Optimization> documentation. Note that the
+% different methods lead to slightly different solutions and a different
+% number of function evaluations.
+%%
+% *Example 1* (from <A4_poblano_examples_docs.html#4 Poblano Examples>)
+%
+% In this example, we have $x \in R^{10}$ and $a = 3$, and use a random
+% starting point.
+randn('state',0);
+x0 = randn(10,1)
+out = lbfgs(@(x) example1(x,3), x0)
+%%
+% *Example 2* (from <A4_poblano_examples_docs.html#11 Poblano Examples>)
+%
+% In this example, we compute a rank-4 approximation to a $4 \times 4$
+% Pascal matrix (generated using the Matlab function |pascal(4)|). The
+% starting point is random vector. Note that in the interest of space,
+% Poblano is set to display only the final iteration is this example.
+m = 4; n = 4; k = 4; 
+Data.rank = k; 
+Data.A = pascal(m);
+randn('state',0);
+x0 = randn((m+n)*k,1);
+out = lbfgs(@(x) example2(x,Data), x0, 'Display', 'final')
+%%
+%
+% As for the |ncg| method, the fact that
+% |out.ExitFlag| > 0 indicates that the method did not
+% converge to the specified tolerance (i.e., using the default |StopTol|
+% input parameter value of |1e-5|). Since the maximum number of function
+% evaluations was exceeded, we can increasing the number of maximum numbers
+% of function evaluations and iterations allowed, and the optimizer
+% converges to a solution within the specified tolerance.
+out = lbfgs(@(x) example2(x,Data), x0, 'MaxIters',1000, ...
+    'MaxFuncEvals',10000,'Display','final')
+%%
+%
+% Verifying the solution, we see that we find a matrix decomposition which
+% fits the matrix with very small relative error (given the stopping
+% tolerance of |1e-5| used by the optimizer).
+[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+%%
+%
+% For Example 2, we see that |lbfgs| requires slightly fewer
+% function evaluations than |ncg| to solve the problem (143 versus
+% 175). Performance of the different methods in Poblano is dependent on
+% both the method and the particular parameters chosen. Thus, it is
+% recommended that several test runs on smaller problems are performed
+% initially using the different methods to help decide which method and set
+% of parameters works best for a particular class of problems.
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Dennis, Jr., J. E. and Schnabel, R. B. (1996). _Numerical Methods 
+% for Unconstrained Optimization and Nonlinear Equations_. SIAM.
+%
+% [2] Nocedal, J. and Wright S. J. (1999). 
+% _Numerical Optimization_. Springer.
+
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

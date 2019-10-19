@@ -1,0 +1,25 @@
+
+% constants
+RADIAL     = 1;
+SPIRAL     = 2;
+LOG_SPIRAL = 3;
+LIM_ANGLE  = 4;
+SPHERICAL  = 5;
+COMPLETE   = 6;
+RAND_LINES = 7;
+RAND_PTS   = 8;
+LOW_PASS   = 9;
+HELICAL    = 10;
+TRAJ = {'RADIAL', 'SPIRAL', 'LOG_SPIRAL', 'LIM_ANGLE', 'SPHERICAL', 'COMPLETE'};
+
+BRAINWEB   = 1;
+SHEPPLOGAN = 2;
+DATA = {'BRAINWEB','SHEPP-LOGAN'};
+
+REAL    = 1;
+COMPLEX = 2;
+OBS     = {'REAL','COMPLEX'};
+
+NONE  = 0;
+TEXT  = 1;
+IMAGE = 2;
