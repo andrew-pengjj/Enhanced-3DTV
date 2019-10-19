@@ -1,11 +1,15 @@
 # Enhanced-3DTV
 The code of enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing.
 
-There are Two tasks:
+## There are Two tasks:
 
-- Compress sensing
+### Compress sensing
 
-- Denoising
+### Denoising
+
+Reader can download these codes to test the performance of all method. The dataset can be download in the following url.
+
+### Compress sensing
 
 The structure of Compress sensing is:
   - compared method
@@ -23,7 +27,9 @@ The structure of Compress sensing is:
   - Enhanced3DTV in the paper
   - quality assess
   - demo.m
-  
+
+### Compress sensing
+
 The structure of Denoising is:
   - compete code
     
