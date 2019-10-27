@@ -1,5 +1,10 @@
 # Enhanced-3DTV
-The code of enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing.
+
+The motivation map of Enhanced-3DTV is as follows. 
+
+![motivation](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs_v2.pdf "motivation.pdf")
+
+The code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing” .
 
 ## There are Two tasks: Compress sensing & Denoising 
 ### structure 
@@ -49,5 +54,13 @@ API of all methods are list in "RunAllMethod.m"
 Readers can run "Demo_simulation_case1.m" and "Demo_simulation_case3.m"to test all the code, run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in Denoise tasks.
 
 ### supplemental.pdf
+Here, we show some visual restoration of all methods
+
+![denoising](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/ijcv_indian_p1.pdf)
+
+![cs_1](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_dc_160.pdf)
+
+![cs_2](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_lowal_80.pdf)
+
 The proof of the equivalence and more experiment results are list in supplemental.pdf
 
