@@ -4,7 +4,7 @@ The motivation map of Enhanced-3DTV is as follows.
 
 ![motivation of Enhanced 3DTV](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs_v2.pdf)
 
-The code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing” .I
+The code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing”
 
 ## There are Two tasks: Compress sensing & Denoising 
 ### structure 
