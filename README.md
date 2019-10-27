@@ -56,7 +56,7 @@ Readers can run "Demo_simulation_case1.m" and "Demo_simulation_case3.m"to test a
 ### supplemental.pdf
 Here, we show some visual restoration of all methods
 
-![IndianPines](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/ijcv_indian_p1.pdf)
+![IndianPines](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/indian_pines_denosing.pdf)
 
 ![cs_dc_160](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_dc_160.pdf)
 
