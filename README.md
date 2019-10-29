@@ -25,9 +25,9 @@ The matlab code of paper “Enhanced 3DTV Regularization and Its Applications on
 
 ```bash
 # run "demo.m" in command line window of matlab to test all codes
-demo.m
+$ demo.m
 # run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in compress sensing tasks.
-demo_EnhancedTV_CS.m
+$ demo_EnhancedTV_CS.m
 ```
   #### Compress sensing
   The structure of Denoising is:
@@ -58,9 +58,9 @@ demo_EnhancedTV_CS.m
 API of all methods are list in "RunAllMethod.m"  
 ```bash
 # run "Demo_simulation_case1.m" and "Demo_simulation_case3.m"to test all the code. For example,
-Demo_simulation_case3.m
+$ Demo_simulation_case3.m
 # run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in Denoise tasks. For example,
-simulation_case3_demo.m
+$ simulation_case3_demo.m
 ```
 
 ### supplemental.pdf
