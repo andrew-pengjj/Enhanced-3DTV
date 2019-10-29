@@ -4,7 +4,7 @@ The motivation map of Enhanced-3DTV is as follows.
 
 ![motivation of Enhanced 3DTV](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs_v2.pdf)
 
-The code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing”
+The matlab code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing”
 
 ## There are Two tasks: Compress sensing & Denoising 
 ### structure 
@@ -22,8 +22,13 @@ The code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-
     * quality assess
   * quality assess
   * demo.m
-  
-Readers can run "demo.m" to test all the code, run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in compress sensing tasks.
+
+```bash
+# run "demo.m" in command line window of matlab to test all codes
+demo.m
+# run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in compress sensing tasks.
+demo_EnhancedTV_CS.m
+```
   #### Compress sensing
   The structure of Denoising is:
   * compete code
@@ -51,7 +56,12 @@ Readers can run "demo.m" to test all the code, run the code inside "Enhanced3DTV
   * RunAllMethod.m
 
 API of all methods are list in "RunAllMethod.m"  
-Readers can run "Demo_simulation_case1.m" and "Demo_simulation_case3.m"to test all the code, run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in Denoise tasks.
+```bash
+# run "Demo_simulation_case1.m" and "Demo_simulation_case3.m"to test all the code. For example,
+Demo_simulation_case3.m
+# run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in Denoise tasks. For example,
+simulation_case3_demo.m
+```
 
 ### supplemental.pdf
 Here, we show some visual restoration of all methods
