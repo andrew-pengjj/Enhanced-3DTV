@@ -65,11 +65,11 @@ $ simulation_case3_demo.m
 
 ### supplemental.pdf
 Here, we show some visual restoration of all methods
-
+The denoising performance of all methods on IndianPines simulation data.
 ![IndianPines](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/indian_pines_denosing.png)
-
+The compress sensing restore  performance of all methods on dcmall data.
 ![cs_dc_160](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_dc_160.png)
-
+The compress sensing restore  performance of all methods on lowal altitude data.
 ![cs_lowal_80](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_lowal_80.png)
 
 More experiment results and the proof of the equivalence are list in supplemental.pdf
