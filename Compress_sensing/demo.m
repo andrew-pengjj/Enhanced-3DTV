@@ -9,12 +9,13 @@ RandStream.setGlobalStream(RandStream('mt19937ar','seed',seed));
 
 %% read data
 load x_dc
-x_dc = x_dc(1:100,1:100,1:30);
+% x_dc = x_dc(1:100,1:100,1:30);
 x=trans255(x_dc);
 [w,h,s] = size(x);
 %% Generate measurements
 ratio  = 0.05; 
 N      = h*w;
+% A      = PermuteWHT2(N,s,ratio);
 A      = PermuteWHT_partitioned(N,s,ratio);
 AT     = A';
 % A      = PermuteWHT2(N,s,ratio);

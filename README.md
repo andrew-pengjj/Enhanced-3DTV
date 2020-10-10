@@ -4,7 +4,7 @@ The motivation map of Enhanced-3DTV is as follows.
 
 ![motivation of Enhanced 3DTV](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs_v2.pdf)
 
-The matlab code of paper “Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing”
+The matlab code of paper ''Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing''
 
 ## There are Two tasks: Compress sensing & Denoising 
 ### structure 
@@ -29,7 +29,7 @@ $ demo.m
 # run the code inside "Enhanced3DTV in the paper" to see the performances of Enhanced 3DTV in compress sensing tasks.
 $ demo_EnhancedTV_CS.m
 ```
-  #### Compress sensing
+  #### denoising
   The structure of Denoising is:
   * compete code
     * ALM_RPCA
