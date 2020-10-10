@@ -2,7 +2,7 @@
 
 The motivation map of Enhanced-3DTV is as follows. 
 
-![motivation of Enhanced 3DTV](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs_v2.pdf)
+![motivation of Enhanced 3DTV](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/3DTVandOurs.png)
 
 The matlab code of paper ''Enhanced 3DTV Regularization and Its Applications on Hyper-spectral Image Denoising and Compressed Sensing''
 
@@ -66,11 +66,11 @@ $ simulation_case3_demo.m
 ### supplemental.pdf
 Here, we show some visual restoration of all methods
 
-![IndianPines](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/indian_pines_denosing.pdf)
+![IndianPines](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/indian_pines_denosing.png)
 
-![cs_dc_160](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_dc_160.pdf)
+![cs_dc_160](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_dc_160.png)
 
-![cs_lowal_80](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_lowal_80.pdf)
+![cs_lowal_80](https://github.com/andrew-pengjj/Enhanced-3DTV/blob/master/Img/cs_lowal_80.png)
 
 More experiment results and the proof of the equivalence are list in supplemental.pdf
 
