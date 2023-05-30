@@ -10,7 +10,7 @@ RandStream.setGlobalStream(RandStream('mt19937ar','seed',seed));
 %% read data
 load x_dc
 % x_dc = x_dc(1:100,1:100,1:30);
-x=trans255(x_dc);
+x=trans255(double(x_dc));
 [w,h,s] = size(x);
 %% Generate measurements
 ratio  = 0.05; 
